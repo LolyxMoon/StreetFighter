@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Betting Overlay</title>
+    <style>
+        canvas { border: 1px solid #000; }
+    </style>
+</head>
+<body>
+    <canvas width="382" height="224"></canvas>
+    <button onclick="toggleBetting()">Toggle Betting</button>
+    <button onclick="startBattle()">Start Battle</button>
+    
+    <script>
+        const canvas = document.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+        let bettingActive = true;
+        let fighters = [
+            { x: 100, y: 150, hp: 100, name: 'RYU' },
+            { x: 280, y: 150, hp: 100, name: 'KEN' }
+        ];
+        
+        function drawBetting() {
+            // Fondo
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, 382, 224);
+            
+            // Panel Ryu
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.8)';
+            ctx.fillRect(10, 40, 100, 140);
+            ctx.fillStyle = '#FFF';
+            ctx.font = '14px Arial';
+            ctx.fillText('RYU', 60, 60);
+            ctx.fillText('Pool: 0.5 BNB', 20, 80);
+            
+            // Panel Ken
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.8)';
+            ctx.fillRect(272, 40, 100, 140);
+            ctx.fillStyle = '#FFF';
+            ctx.fillText('KEN', 322, 60);
+            ctx.fillText('Pool: 0.3 BNB', 282, 80);
+            
+            // Título
+            ctx.fillStyle = '#FFF';
+            ctx.font = '16px Arial';
+            ctx.fillText('PLACE YOUR BETS!', 120, 20);
+        }
+        
+        function drawBattle() {
+            ctx.fillStyle = '#333';
+            ctx.fillRect(0, 0, 382, 224);
+            
+            // Dibujar fighters
+            ctx.fillStyle = '#F00';
+            ctx.fillRect(fighters[0].x, fighters[0].y, 30, 50);
+            ctx.fillStyle = '#FF0';
+            ctx.fillRect(fighters[1].x, fighters[1].y, 30, 50);
+            
+            // Simular movimiento
+            fighters[0].x += Math.random() * 4 - 2;
+            fighters[1].x += Math.random() * 4 - 2;
+        }
+        
+        function draw() {
+            if (bettingActive) {
+                drawBetting();
+            } else {
+                drawBattle();
+            }
+            requestAnimationFrame(draw);
+        }
+        
+        function toggleBetting() {
+            bettingActive = !bettingActive;
+        }
+        
+        function startBattle() {
+            bettingActive = false;
+        }
+        
+        draw();
+    </script>
+</body>
+</html>

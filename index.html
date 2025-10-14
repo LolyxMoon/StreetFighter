@@ -8,7 +8,12 @@
 		<link rel="stylesheet" href="src/style.css" />
 		<script type="module" src="src/index.js"></script>
 	</head>
-
+<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+    // Configurar URL del servidor
+    window.GAME_SERVER_URL = 'http://localhost:3000'; // Cambiar según tu servidor
+</script>
 	<body>
 		<main>
 			<canvas width="382px" height="224px"></canvas>
