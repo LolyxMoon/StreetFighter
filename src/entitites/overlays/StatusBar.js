@@ -19,6 +19,7 @@ import { drawFrame } from '../../utils/context.js';
 export class StatusBar {
 	time = BATTLE_TIME;
 	timeTimer = 0;
+	timeDelay = TIME_DELAY;
 
 	timeFlashTimer = 0;
 	useFlashFrames = false;
@@ -29,11 +30,11 @@ export class StatusBar {
 	healthBars = [
 		{
 			timer: 0,
-			hitPoints: 0, //HEALTH_MAX_HIT_POINTS,
+			hitPoints: 0,
 		},
 		{
 			timer: 0,
-			hitPoints: 0, //HEALTH_MAX_HIT_POINTS,
+			hitPoints: 0,
 		},
 	];
 	startingHealthRollUpDone = false;
@@ -65,7 +66,7 @@ export class StatusBar {
 		[`${TIME_FRAME_KEYS[1]}-8`, [144, 192, 14, 16]],
 		[`${TIME_FRAME_KEYS[1]}-9`, [160, 192, 14, 16]],
 
-		// NUmbers
+		// Numbers
 		['score-0', [17, 101, 10, 10]],
 		['score-1', [29, 101, 10, 10]],
 		['score-2', [41, 101, 10, 10]],
@@ -93,7 +94,7 @@ export class StatusBar {
 		['score-L', [161, 113, 10, 10]],
 		['score-M', [173, 113, 10, 10]],
 		['score-N', [185, 113, 11, 10]],
-		['score-0', [197, 113, 10, 10]],
+		['score-O', [197, 113, 10, 10]],
 		['score-P', [17, 125, 10, 10]],
 		['score-Q', [29, 125, 10, 10]],
 		['score-R', [41, 125, 10, 10]],
@@ -112,6 +113,7 @@ export class StatusBar {
 	]);
 
 	constructor(fighters, onTimeEnd) {
+		this.fighters = fighters;
 		this.onTimeEnd = onTimeEnd;
 		this.image = document.getElementById('hud');
 		this.nameTags = gameState.fighters.map(
@@ -198,6 +200,15 @@ export class StatusBar {
 		);
 	}
 
+	updateTimeFlash = (time) => {
+		if (this.time > 15 || !this.startingHealthRollUpDone) return;
+
+		if (this.timeFlashTimer + TIME_FLASH_DELAY[Number(this.useFlashFrames)] < time.previous) {
+			this.useFlashFrames = !this.useFlashFrames;
+			this.timeFlashTimer = time.previous;
+		}
+	};
+
 	drawTime(context) {
 		const timeString = String(Math.max(this.time, 0)).padStart(2, '0');
 
@@ -212,22 +223,25 @@ export class StatusBar {
 		this.drawFrame(context, this.nameTags[1], 322, 33);
 	}
 
-	updateTime(time) {
-		if (time.previous > this.timeTimer + TIME_DELAY) {
+	updateTime = (time) => {
+		// CORREGIDO: Timer simplificado - solo verificar fighters válidos
+		if (!this.fighters || this.fighters.length < 2) return;
+		
+		// El timer debe correr siempre que la batalla esté activa
+		// No verificar hitPoints ni battlePaused
+		
+		if (this.timeTimer + TIME_DELAY < time.previous) {
 			this.time -= 1;
 			this.timeTimer = time.previous;
 		}
 
-		if (
-			this.time < 15 &&
-			this.time > -1 &&
-			time.previous > this.timeFlashTimer + TIME_FLASH_DELAY
-		) {
-			this.timeFlashTimer = time.previous;
-			this.useFlashFrames = !this.useFlashFrames;
+		this.updateTimeFlash(time);
+
+		// Llamar onTimeEnd cuando el tiempo llegue a 0
+		if (this.time === 0 && this.onTimeEnd) {
+			this.onTimeEnd(time);
 		}
-		if (this.time === -2) this.onTimeEnd(time);
-	}
+	};
 
 	update(time) {
 		this.updateTime(time);

@@ -426,7 +426,7 @@ export class Fighter {
 
 	changeState = (newState, time) => {
 		if (!this.states[newState].validFrom.includes(this.currentState)) {
-			console.log(`Illegal move from ${this.currentState} to ${newState}`);
+			// console.log(`Illegal move from ${this.currentState} to ${newState}`);
 			return;
 		}
 		this.currentState = newState;

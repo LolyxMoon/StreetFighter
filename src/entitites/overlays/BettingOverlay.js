@@ -172,12 +172,7 @@ export class BettingOverlay {
     draw(context) {
         console.log('BettingOverlay.draw called, active:', this.bettingActive);
         
-        // AGREGAR: Dibujar algo siempre para verificar
-        context.fillStyle = 'yellow';
-        context.fillRect(0, 0, 200, 20);
-        context.fillStyle = 'black';
-        context.font = '12px Arial';
-        context.fillText(`Betting: ${this.bettingActive ? 'ACTIVE' : 'INACTIVE'}`, 5, 15);
+
         
         // Guardar estado del context
         context.save();

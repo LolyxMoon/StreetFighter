@@ -1,98 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<link rel="icon" href="./public/images/vsLogo.png" />
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Street Fighter by Mayank Jain</title>
-		<link rel="stylesheet" href="src/style.css" />
-		<script type="module" src="src/index.js"></script>
-	</head>
-<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<script>
-    // Configurar URL del servidor
-    window.GAME_SERVER_URL = 'http://localhost:3000'; // Cambiar según tu servidor
-</script>
-	<body>
-		<main>
-			<canvas width="382px" height="224px"></canvas>
-		</main>
-		<audio
-			id="kensTheme"
-			src="./public/sounds/kens-theme.ogg"
-			preload="auto"
-			loop
-		></audio>
-		<audio
-			id="sound-fighter-land"
-			src="./public/sounds/land.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-light-kick-hit"
-			src="./public/sounds/light-kick-hit.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-medium-kick-hit"
-			src="./public/sounds/medium-kick-hit.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-heavy-kick-hit"
-			src="./public/sounds/heavy-kick-hit.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-light-attack"
-			src="./public/sounds/light-attack.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-medium-attack"
-			src="./public/sounds/medium-attack.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-heavy-attack"
-			src="./public/sounds/heavy-attack.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-light-punch-hit"
-			src="./public/sounds/light-punch-hit.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-medium-punch-hit"
-			src="./public/sounds/medium-punch-hit.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-fighter-heavy-punch-hit"
-			src="./public/sounds/heavy-punch-hit.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-ken-hadouken"
-			src="./public/sounds/hadouken.ogg"
-			preload="auto"
-		></audio>
-		<audio
-			id="sound-ryu-hadouken"
-			src="./public/sounds/hadouken.ogg"
-			preload="auto"
-		></audio>
+<head>
+    <link rel="icon" href="./public/images/vsLogo.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Street Fighter Betting - Live AI Battles</title>
+    <meta name="description" content="Watch live AI Street Fighter battles and bet with BNB on BSC. Battles every 5 minutes, fully automated betting system.">
+    <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+    <main>
+        <canvas width="382px" height="224px"></canvas>
+    </main>
 
-		<img id="KenStage" src="public/images/kenstage.png" alt="kenstage" />
-		<img id="hud" src="public/images/hud.png" alt="HUD" />
-		<img id="KenImage" src="./public/images/ken.png" />
-		<img id="RyuImage" src="public/images/Ryu.png" />
-		<img id="ShadowImage" src="./public/images/shadow.png" />
-		<img id="Decals" src="./public/images/decals.png" />
-		<img id="Controls" src="./public/images/Controls.png" />
-		<img id="Logo" src="./public/images/logo.png" />
-		<img id="Winner" src="./public/images/winnerText.png" />
-	</body>
+    <!-- Audio Elements -->
+    <audio id="kensTheme" src="./public/sounds/kens-theme.ogg" preload="auto" loop></audio>
+    <audio id="sound-fighter-land" src="./public/sounds/land.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-light-kick-hit" src="./public/sounds/light-kick-hit.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-medium-kick-hit" src="./public/sounds/medium-kick-hit.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-heavy-kick-hit" src="./public/sounds/heavy-kick-hit.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-light-attack" src="./public/sounds/light-attack.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-medium-attack" src="./public/sounds/medium-attack.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-heavy-attack" src="./public/sounds/heavy-attack.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-light-punch-hit" src="./public/sounds/light-punch-hit.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-medium-punch-hit" src="./public/sounds/medium-punch-hit.ogg" preload="auto"></audio>
+    <audio id="sound-fighter-heavy-punch-hit" src="./public/sounds/heavy-punch-hit.ogg" preload="auto"></audio>
+    <audio id="sound-ken-hadouken" src="./public/sounds/hadouken.ogg" preload="auto"></audio>
+    <audio id="sound-ryu-hadouken" src="./public/sounds/hadouken.ogg" preload="auto"></audio>
+
+    <!-- Image Assets (hidden) -->
+    <img id="KenStage" src="public/images/kenstage.png" alt="kenstage" style="display:none;" />
+    <img id="hud" src="public/images/hud.png" alt="HUD" style="display:none;" />
+    <img id="KenImage" src="./public/images/ken.png" style="display:none;" />
+    <img id="RyuImage" src="public/images/Ryu.png" style="display:none;" />
+    <img id="ShadowImage" src="./public/images/shadow.png" style="display:none;" />
+    <img id="Decals" src="./public/images/decals.png" style="display:none;" />
+    <img id="Controls" src="./public/images/Controls.png" style="display:none;" />
+    <img id="Logo" src="./public/images/logo.png" style="display:none;" />
+    <img id="Winner" src="./public/images/winnerText.png" style="display:none;" />
+
+    <!-- External Libraries -->
+    <!-- Socket.io Client -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" 
+        crossorigin="anonymous"></script>
+    
+    <!-- QR Code Generator -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+    <!-- Server URL Configuration -->
+    <script>
+        // ============================================
+        // CONFIGURACION PARA NGROK
+        // ============================================
+        
+        (function() {
+            const hostname = window.location.hostname;
+            const protocol = window.location.protocol;
+            
+            let serverUrl;
+            
+            // Si estamos en ngrok, usar el mismo dominio
+            if (hostname.includes('ngrok') || hostname === 'streetfighterbet.ngrok.dev') {
+                // Usar el mismo dominio de ngrok para servidor
+                serverUrl = protocol + '//' + hostname;
+                console.log('🚇 Ngrok domain detected');
+            } 
+            // Si estamos en localhost (para testing local)
+            else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                serverUrl = 'http://localhost:3000';
+                console.log('🔧 Local development mode');
+            }
+            // Cualquier otro dominio
+            else {
+                serverUrl = protocol + '//' + hostname;
+                console.log('🌐 Production domain');
+            }
+            
+            // Override manual via URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const serverOverride = urlParams.get('server');
+            if (serverOverride) {
+                serverUrl = serverOverride;
+                console.log('⚠️ Server URL manually overridden');
+            }
+            
+            window.GAME_SERVER_URL = serverUrl;
+            
+            console.log('%c╔════════════════════════════════════════╗', 'color: #FFD700');
+            console.log('%c║   STREET FIGHTER BETTING SYSTEM       ║', 'color: #FFD700; font-weight: bold');
+            console.log('%c╠════════════════════════════════════════╣', 'color: #FFD700');
+            console.log('%c║ URL:      ' + serverUrl.padEnd(30) + '║', 'color: #00FF00');
+            console.log('%c║ Network:  BSC Mainnet                 ║', 'color: #FFD700');
+            console.log('%c║ Cycle:    5 minutes                   ║', 'color: #FFD700');
+            console.log('%c╚════════════════════════════════════════╝', 'color: #FFD700');
+        })();
+    </script>
+
+    <!-- Main Game Script (ES Module) -->
+    <script type="module" src="src/index.js"></script>
+
+    <!-- Loading Indicator -->
+    <style>
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        
+        #loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #333;
+            border-top: 5px solid #FFD700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        #loading-text {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #FFD700;
+        }
+        
+        #loading-status {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #AAA;
+        }
+        
+        .loading-complete {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+            pointer-events: none;
+        }
+    </style>
+
+    <div id="loading-overlay">
+        <div id="loading-spinner"></div>
+        <div id="loading-text">STREET FIGHTER</div>
+        <div id="loading-status">Loading assets...</div>
+    </div>
+
+    <script>
+        // Loading management
+        (function() {
+            let assetsLoaded = 0;
+            const totalAssets = document.querySelectorAll('img, audio').length;
+            const loadingStatus = document.getElementById('loading-status');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            
+            function updateLoadingStatus() {
+                assetsLoaded++;
+                const percentage = Math.floor((assetsLoaded / totalAssets) * 100);
+                loadingStatus.textContent = `Loading assets... ${percentage}%`;
+                
+                if (assetsLoaded >= totalAssets) {
+                    setTimeout(() => {
+                        loadingStatus.textContent = 'Connecting to server...';
+                        
+                        // Wait a bit more for socket connection
+                        setTimeout(() => {
+                            loadingStatus.textContent = 'Ready!';
+                            loadingOverlay.classList.add('loading-complete');
+                            
+                            // Remove overlay after fade
+                            setTimeout(() => {
+                                loadingOverlay.remove();
+                            }, 500);
+                        }, 1000);
+                    }, 200);
+                }
+            }
+            
+            // Track image loading
+            document.querySelectorAll('img').forEach(img => {
+                if (img.complete) {
+                    updateLoadingStatus();
+                } else {
+                    img.addEventListener('load', updateLoadingStatus);
+                    img.addEventListener('error', updateLoadingStatus);
+                }
+            });
+            
+            // Track audio loading
+            document.querySelectorAll('audio').forEach(audio => {
+                audio.addEventListener('canplaythrough', updateLoadingStatus, { once: true });
+                audio.addEventListener('error', updateLoadingStatus, { once: true });
+            });
+        })();
+    </script>
+
+    <!-- Error Handler -->
+    <script>
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+        });
+        
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+        });
+    </script>
+</body>
 </html>

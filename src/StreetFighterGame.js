@@ -28,7 +28,7 @@ export class StreetFighterGame {
 	
 	// NUEVO: Cliente Socket.io
 	socketClient = null;
-	serverUrl = window.GAME_SERVER_URL || 'http://localhost:3000';
+	serverUrl = window.GAME_SERVER_URL || 'https://streetfighterbet.ngrok.dev';
 
 	changeScene = (SceneClass, config = {}) => {
 		this.contextHandler.startDimDown();
@@ -75,26 +75,21 @@ export class StreetFighterGame {
 	
 	// NUEVO: Configurar listeners del socket
 	setupSocketListeners() {
-		// IMPORTANTE: Listener para el estado inicial al conectar
-this.socketClient.on('current-state', (state) => {
-    console.log('Server state received:', state);
-    
-    // IMPORTANTE: Si hay apuestas O batalla, ir a BattleScene
-    if ((state.bettingPhase || state.battleInProgress) && this.scene?.constructor.name !== 'BattleScene') {
-        console.log('Creating BattleScene for betting/battle');
-        this.changeScene(BattleScene, {
-            bettingPhase: state.bettingPhase,
-            battleInProgress: state.battleInProgress,
-            wallets: state.wallets,
-            nextBattleTime: state.nextBattleTime,
-            isAIBattle: true,
-            battlePaused: state.bettingPhase // Pausar si hay apuestas
-        });
-    }
-
-			// Si hay batalla en progreso
-			else if (state.battleInProgress && state.seed) {
-				console.log('Battle in progress, syncing...');
+		// CORREGIDO: Listener para el estado inicial al conectar
+		this.socketClient.on('current-state', (state) => {
+			console.log('Server state received:', state);
+			
+			// Si hay betting phase, StartScene se encarga
+			if (state.bettingPhase || state.phase === 'BETTING') {
+				console.log('Betting phase active - StartScene will handle it');
+				// NO cambiar de escena, StartScene ya está manejando esto
+				return;
+			}
+			
+			// Si hay batalla en progreso Y no estamos en BattleScene
+			if ((state.battleInProgress || state.phase === 'BATTLE') && 
+				this.scene?.constructor.name !== 'BattleScene') {
+				console.log('Battle in progress, syncing to BattleScene');
 				this.changeScene(BattleScene, {
 					isAIBattle: true,
 					seed: state.seed,
@@ -104,10 +99,6 @@ this.socketClient.on('current-state', (state) => {
 					battlePaused: false
 				});
 			}
-			// Si no hay nada activo, quedarse en StartScene
-			else {
-				console.log('No active phase, staying in StartScene');
-			}
 		});
 		
 		// Cuando conecta al servidor (actualizaciones generales)
@@ -115,26 +106,17 @@ this.socketClient.on('current-state', (state) => {
 			console.log('State update received:', state);
 		});
 		
-		// Cuando empieza fase de apuestas (desde StartScene ir a BattleScene)
+		// Cuando empieza fase de apuestas
 		this.socketClient.on('betting-phase-started', (data) => {
 			console.log('Betting phase started!', data);
-			
-			// Cambiar directamente a BattleScene con fase de apuestas
-			this.changeScene(BattleScene, {
-				bettingPhase: true,
-				wallets: data.wallets,
-				nextBattleTime: data.nextBattleTime,
-				minBet: data.minBet || 10,
-				isAIBattle: true,
-				battlePaused: true
-			});
+			// NO hacer nada - StartScene ya está activo y lo maneja
 		});
 		
 		// Cuando empieza la batalla
-		this.socketClient.on('battle-start', (data) => {
+		this.socketClient.on('battle-started', (data) => {
 			console.log('Battle starting with seed:', data.seed);
 			
-			// Si no estamos en BattleScene, cambiar
+			// Cambiar a BattleScene SOLO si no estamos ya ahí
 			if (this.scene && this.scene.constructor.name !== 'BattleScene') {
 				this.changeScene(BattleScene, {
 					isAIBattle: true,
@@ -147,10 +129,9 @@ this.socketClient.on('current-state', (state) => {
 		});
 		
 		// Sincronización de batalla para usuarios que se conectan tarde
-		this.socketClient.on('battle-sync', (data) => {
+		this.socketClient.on('sync-battle', (data) => {
 			console.log('Syncing with ongoing battle');
 			
-			// Cambiar a BattleScene con estado sincronizado
 			if (this.scene && this.scene.constructor.name !== 'BattleScene') {
 				this.changeScene(BattleScene, {
 					isAIBattle: true,
@@ -164,15 +145,14 @@ this.socketClient.on('current-state', (state) => {
 		});
 		
 		// Cuando termina la batalla, volver a StartScene
-		this.socketClient.on('battle-end', (data) => {
+		this.socketClient.on('battle-ended', (data) => {
 			console.log('Battle ended, winner:', data.winner);
 			
-			// Después de unos segundos, volver a StartScene
 			setTimeout(() => {
 				if (this.scene && this.scene.constructor.name === 'BattleScene') {
 					this.changeScene(StartScene);
 				}
-			}, 8000); // 8 segundos para ver resultados y pagos
+			}, 6000);
 		});
 		
 		// Manejo de errores de conexión
@@ -180,15 +160,12 @@ this.socketClient.on('current-state', (state) => {
 			console.error('Connection error:', error);
 		});
 		
-		// Cuando se desconecta
 		this.socketClient.on('disconnect', (reason) => {
 			console.log('Disconnected from server:', reason);
 		});
 		
-		// Cuando se reconecta
 		this.socketClient.on('reconnect', (attemptNumber) => {
 			console.log('Reconnected after', attemptNumber, 'attempts');
-			// El servidor debería enviar 'current-state' automáticamente
 		});
 	}
 
@@ -239,6 +216,6 @@ this.socketClient.on('current-state', (state) => {
 }
 
 // Configuración global del servidor (puede ser sobreescrita)
-window.GAME_SERVER_URL = window.location.hostname === 'localhost' 
+window.GAME_SERVER_URL = window.location.hostname === 'https://streetfighterbet.ngrok.dev' 
 	? 'http://localhost:3000' 
-	: 'https://tu-dominio.com'; // Cambiar a tu dominio real
+	: 'https://streetfighterbet.ngrok.dev'; // Cambiar a tu dominio real

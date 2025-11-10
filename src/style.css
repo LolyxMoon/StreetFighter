@@ -12,7 +12,21 @@ body{
 html::-webkit-scrollbar {
   display: none;
 }
+/* Botones de wallet estilo Street Fighter */
+#wallet-buttons button {
+    font-family: 'Arial Black', sans-serif;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
 
+#wallet-buttons button:hover {
+    transform: scale(1.05);
+}
+
+#wallet-buttons button:active {
+    transform: scale(0.95);
+}
 /* Hide scrollbar for IE, Edge and Firefox */
 html {
   -ms-overflow-style: none;  /* IE and Edge */

@@ -6,21 +6,24 @@ export class BSCMonitor extends EventEmitter {
     constructor() {
         super();
         this.web3 = null;
-        this.watchingWalletscheckWalletTransactions  = new Map();
+        this.watchingWallets = new Map(); // CORREGIDO: Era "watchingWalletscheckWalletTransactions"
         this.intervals = new Map();
         this.lastBlockChecked = 0;
     }
 
     async initialize() {
-        // Conectar a BSC
-        const bscRpcUrl = process.env.BSC_RPC_URL || 'https://data-seed-prebsc-1-s1.binance.org:8545/';
+        // Conectar a BSC - USAR MAINNET para producción
+        const bscRpcUrl = process.env.BSC_RPC_URL || 'https://bsc-dataseed1.binance.org:443';
+        // Para testnet usar: 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+        
         this.web3 = new Web3(new Web3.providers.HttpProvider(bscRpcUrl));
         
         // Verificar conexión
         try {
             const blockNumber = await this.web3.eth.getBlockNumber();
-            this.lastBlockChecked = blockNumber;
-            console.log(`Connected to BSC. Current block: ${blockNumber}`);
+            this.lastBlockChecked = Number(blockNumber); // Convertir BigInt a Number
+            console.log(`✅ Connected to BSC. Current block: ${this.lastBlockChecked}`);
+            console.log(`Network: ${bscRpcUrl.includes('prebsc') ? 'TESTNET' : 'MAINNET'}`);
             return true;
         } catch (error) {
             console.error('Failed to connect to BSC:', error);
@@ -35,7 +38,7 @@ export class BSCMonitor extends EventEmitter {
             return;
         }
 
-        console.log(`Starting to watch wallet: ${address}`);
+        console.log(`👁️ Starting to watch wallet: ${address}`);
         this.watchingWallets.set(address, callback);
 
         // Chequear cada 3 segundos
@@ -50,33 +53,36 @@ export class BSCMonitor extends EventEmitter {
     stopWatching() {
         for (const [address, interval] of this.intervals) {
             clearInterval(interval);
-            console.log(`Stopped watching wallet: ${address}`);
+            console.log(`⏹️ Stopped watching wallet: ${address}`);
         }
         this.intervals.clear();
         this.watchingWallets.clear();
     }
 
-async checkWalletTransactions(address, callback) {
+    async checkWalletTransactions(address, callback) {
         try {
             const currentBlock = await this.web3.eth.getBlockNumber();
             
-            // Convertir a Number si es BigInt
-            const currentBlockNum = typeof currentBlock === 'bigint' ? Number(currentBlock) : currentBlock;
-            const lastBlockNum = typeof this.lastBlockChecked === 'bigint' ? Number(this.lastBlockChecked) : this.lastBlockChecked;
+            // Convertir a Number para manejar BigInt
+            const currentBlockNum = Number(currentBlock);
+            const lastBlockNum = this.lastBlockChecked;
+            
+            // No revisar más de 5 bloques atrás para evitar sobrecarga
+            const fromBlock = Math.max(lastBlockNum + 1, currentBlockNum - 5);
             
             // Obtener transacciones de los últimos bloques
-            for (let i = lastBlockNum + 1; i <= currentBlockNum; i++) {
+            for (let i = fromBlock; i <= currentBlockNum; i++) {
                 const block = await this.web3.eth.getBlock(i, true);
                 
                 if (block && block.transactions) {
                     for (const tx of block.transactions) {
                         // Verificar si la transacción es hacia nuestra wallet
                         if (tx.to && tx.to.toLowerCase() === address.toLowerCase()) {
-                            // Convertir value a string si es BigInt antes de usar fromWei
-                            const valueStr = typeof tx.value === 'bigint' ? tx.value.toString() : tx.value;
+                            // Convertir value correctamente
+                            const valueStr = tx.value ? tx.value.toString() : '0';
                             const value = this.web3.utils.fromWei(valueStr, 'ether');
                             
-                            console.log(`New transaction detected to ${address}:`);
+                            console.log(`💰 New transaction detected to ${address}:`);
                             console.log(`  From: ${tx.from}`);
                             console.log(`  Amount: ${value} BNB`);
                             console.log(`  Hash: ${tx.hash}`);
@@ -87,7 +93,7 @@ async checkWalletTransactions(address, callback) {
                                 to: tx.to,
                                 value: parseFloat(value),
                                 hash: tx.hash,
-                                blockNumber: typeof tx.blockNumber === 'bigint' ? Number(tx.blockNumber) : tx.blockNumber,
+                                blockNumber: Number(tx.blockNumber),
                                 timestamp: new Date()
                             });
                         }
@@ -106,7 +112,8 @@ async checkWalletTransactions(address, callback) {
     async getBalance(address) {
         try {
             const balance = await this.web3.eth.getBalance(address);
-            return this.web3.utils.fromWei(balance, 'ether');
+            const balanceStr = balance.toString();
+            return this.web3.utils.fromWei(balanceStr, 'ether');
         } catch (error) {
             console.error('Error getting balance:', error);
             return '0';
@@ -120,11 +127,12 @@ async checkWalletTransactions(address, callback) {
             const receipt = await this.web3.eth.getTransactionReceipt(txHash);
             
             if (receipt && receipt.status) {
+                const valueStr = tx.value ? tx.value.toString() : '0';
                 return {
                     success: true,
                     from: tx.from,
                     to: tx.to,
-                    value: this.web3.utils.fromWei(tx.value, 'ether'),
+                    value: this.web3.utils.fromWei(valueStr, 'ether'),
                     hash: tx.hash
                 };
             }
@@ -146,8 +154,11 @@ async checkWalletTransactions(address, callback) {
             });
             
             const gasPrice = await this.web3.eth.getGasPrice();
-            // Convertir todo a BigInt primero, luego a string
-            const gasCostWei = (BigInt(gasEstimate) * BigInt(gasPrice)).toString();
+            
+            // Manejar BigInt correctamente
+            const gasEstimateBig = BigInt(gasEstimate.toString());
+            const gasPriceBig = BigInt(gasPrice.toString());
+            const gasCostWei = (gasEstimateBig * gasPriceBig).toString();
             const gasCost = this.web3.utils.fromWei(gasCostWei, 'ether');
             
             return {

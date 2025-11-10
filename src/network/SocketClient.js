@@ -1,4 +1,4 @@
-// src/network/SocketClient.js
+// src/network/SocketClient.js - VERSION SINCRONIZADA CON SERVIDOR
 export class SocketClient {
     constructor() {
         this.socket = null;
@@ -6,168 +6,254 @@ export class SocketClient {
         this.callbacks = new Map();
         this.battleState = null;
         this.bettingState = null;
+        this.reconnectAttempts = 0;
+        this.maxReconnectAttempts = 10;
     }
 
     connect(serverUrl = 'http://localhost:3000') {
         console.log('Connecting to server:', serverUrl);
         
-        // Verificar que Socket.io esté cargado
         if (typeof io === 'undefined') {
             console.error('Socket.io not loaded! Make sure to include the script in index.html');
-            return;
+            return false;
         }
         
         this.socket = io(serverUrl, {
-            transports: ['websocket'],
+            transports: ['websocket', 'polling'],
             reconnection: true,
             reconnectionDelay: 1000,
-            reconnectionAttempts: 5
+            reconnectionDelayMax: 5000,
+            reconnectionAttempts: this.maxReconnectAttempts,
+            timeout: 20000
         });
 
         this.setupEventListeners();
+        return true;
     }
 
     setupEventListeners() {
-        // Conexión establecida
+        // ========== EVENTOS DE CONEXION ==========
+        
         this.socket.on('connect', () => {
-            console.log('Connected to server!');
+            console.log('✅ Connected to server!');
             this.connected = true;
-            this.emit('client-ready', { type: 'viewer' });
+            this.reconnectAttempts = 0;
+            this.trigger('connected', { socketId: this.socket.id });
         });
 
-        // Desconexión
-        this.socket.on('disconnect', () => {
-            console.log('Disconnected from server');
+        this.socket.on('disconnect', (reason) => {
+            console.log('❌ Disconnected from server:', reason);
             this.connected = false;
+            this.trigger('disconnected', { reason });
         });
 
-        // Estado actual del servidor
+        this.socket.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+            this.reconnectAttempts++;
+            this.trigger('connection_error', { error, attempts: this.reconnectAttempts });
+        });
+
+        this.socket.on('reconnect', (attemptNumber) => {
+            console.log('✅ Reconnected after', attemptNumber, 'attempts');
+            this.reconnectAttempts = 0;
+            this.trigger('reconnected', { attempts: attemptNumber });
+        });
+
+        this.socket.on('reconnecting', (attemptNumber) => {
+            console.log('🔄 Reconnecting... attempt', attemptNumber);
+            this.trigger('reconnecting', { attempts: attemptNumber });
+        });
+
+        this.socket.on('reconnect_failed', () => {
+            console.error('❌ Reconnection failed after max attempts');
+            this.trigger('reconnect_failed');
+        });
+
+        // ========== ESTADO ACTUAL DEL SERVIDOR ==========
+        
         this.socket.on('current-state', (data) => {
-            console.log('Current server state:', data);
+            console.log('📊 Current server state:', data);
             this.handleCurrentState(data);
+            this.trigger('current-state', data);
         });
 
         // ========== EVENTOS DE APUESTAS ==========
         
-        // Fase de apuestas iniciada
+        // Fase de apuestas iniciada (CORREGIDO: antes era 'betting-started')
         this.socket.on('betting-phase-started', (data) => {
-            console.log('Betting phase started:', data);
+            console.log('🎰 Betting phase started:', data);
             this.bettingState = {
                 active: true,
                 nextBattleTime: data.nextBattleTime,
                 wallets: data.wallets,
                 minBet: data.minBet,
-                houseFee: data.houseFee
+                houseFee: data.houseFee,
+                cycleNumber: data.cycleNumber
             };
-            this.trigger('betting-started', data);
+            this.trigger('betting-phase-started', data);
         });
 
         // Nueva apuesta recibida
         this.socket.on('new-bet', (data) => {
-            console.log('New bet:', data);
-            this.trigger('bet-update', data);
+            console.log('💰 New bet:', data);
+            this.trigger('new-bet', data);
         });
 
         // Apuestas cerradas
         this.socket.on('betting-closed', (data) => {
-            console.log('Betting closed:', data);
+            console.log('🔒 Betting closed:', data);
             if (this.bettingState) {
                 this.bettingState.active = false;
             }
-            this.trigger('betting-ended', data);
+            this.trigger('betting-closed', data);
         });
 
-        // Countdown para batalla
+        // ========== EVENTOS DE COUNTDOWN ==========
+        
         this.socket.on('battle-countdown', (seconds) => {
-            this.trigger('countdown', seconds);
+            this.trigger('battle-countdown', seconds);
         });
 
         // ========== EVENTOS DE BATALLA ==========
         
         // Batalla iniciada
         this.socket.on('battle-started', (data) => {
-            console.log('Battle started with seed:', data.seed);
+            console.log('⚔️ Battle started with seed:', data.seed);
             this.battleState = {
                 seed: data.seed,
                 inProgress: true,
-                initialState: data.initialState
+                initialState: data.initialState,
+                startTime: Date.now()
             };
-            this.trigger('battle-start', data);
+            this.trigger('battle-started', data);
         });
 
-        // Frame de batalla
+        // Frame de batalla (recibido cada 3 frames del servidor)
         this.socket.on('battle-frame', (data) => {
             if (this.battleState) {
                 this.battleState.currentFrame = data.frame;
                 this.battleState.state = data.state;
             }
-            this.trigger('battle-update', data);
+            this.trigger('battle-frame', data);
         });
 
-        // Sincronización de batalla (para usuarios que se conectan tarde)
+        // Sincronizacion de batalla (para usuarios que se conectan tarde)
         this.socket.on('sync-battle', (data) => {
-            console.log('Syncing battle:', data);
-            this.battleState = data;
-            this.trigger('battle-sync', data);
+            console.log('🔄 Syncing with ongoing battle:', data);
+            this.battleState = {
+                ...data,
+                inProgress: true,
+                synced: true
+            };
+            this.trigger('sync-battle', data);
         });
 
         // Batalla terminada
         this.socket.on('battle-ended', (data) => {
-            console.log('Battle ended! Winner:', data.winner);
+            console.log('🏆 Battle ended! Winner:', data.winner);
             if (this.battleState) {
                 this.battleState.inProgress = false;
                 this.battleState.winner = data.winner;
+                this.battleState.duration = data.duration;
             }
-            this.trigger('battle-end', data);
+            this.trigger('battle-ended', data);
         });
 
         // ========== EVENTOS DE PAGOS ==========
         
-        // Pago enviado
+        // Pago enviado a un ganador
         this.socket.on('payment-sent', (data) => {
-            console.log('Payment sent:', data);
-            this.trigger('payment', data);
+            console.log('💸 Payment sent:', data);
+            this.trigger('payment-sent', data);
         });
 
-        // Pagos completados
+        // Todos los pagos completados
         this.socket.on('payments-completed', (data) => {
-            console.log('All payments completed:', data);
-            this.trigger('payments-done', data);
+            console.log('✅ All payments completed:', data);
+            this.trigger('payments-completed', data);
         });
 
-        // Error de pago
+        // Error en pagos
         this.socket.on('payment-error', (data) => {
-            console.error('Payment error:', data);
+            console.error('❌ Payment error:', data);
             this.trigger('payment-error', data);
         });
+        // ========== EVENTOS DE PAGOS ==========
+
+// Pago enviado a un ganador
+this.socket.on('payment-sent', (data) => {
+    console.log('💸 Payment sent:', data);
+    this.trigger('payment-sent', data);
+});
+
+// Todos los pagos completados
+this.socket.on('payments-completed', (data) => {
+    console.log('✅ All payments completed:', data);
+    this.trigger('payments-completed', data);
+});
+
+// Error en pagos
+this.socket.on('payment-error', (data) => {
+    console.error('❌ Payment error:', data);
+    this.trigger('payment-error', data);
+});
+
+// NUEVO: Datos de resultados de la batalla
+this.socket.on('results-data', (data) => {
+    console.log('📊 Results data received:', data);
+    this.trigger('results-data', data);
+});
+
+// ========== CHAT (OPCIONAL) ==========
 
         // ========== CHAT (OPCIONAL) ==========
         
         this.socket.on('chat-message', (data) => {
-            this.trigger('chat', data);
+            this.trigger('chat-message', data);
         });
     }
 
+    
+
     handleCurrentState(state) {
         // Actualizar estado local basado en estado del servidor
-        if (state.bettingPhase) {
+        
+        // Estado de apuestas
+        if (state.bettingPhase || state.phase === 'BETTING') {
             this.bettingState = {
                 active: true,
                 nextBattleTime: state.nextBattleTime,
                 totalPools: state.totalPools,
-                wallets: state.wallets
+                wallets: state.wallets,
+                cycleNumber: state.cycleNumber
             };
+        } else {
+            if (this.bettingState) {
+                this.bettingState.active = false;
+            }
         }
 
-        if (state.battleInProgress) {
-            // Solicitar sincronización de batalla
-            this.socket.emit('request-sync');
+        // Estado de batalla
+        if (state.battleInProgress || state.phase === 'BATTLE') {
+            this.battleState = {
+                inProgress: true,
+                seed: state.seed,
+                currentFrame: state.currentFrame
+            };
+        } else if (this.battleState && this.battleState.inProgress) {
+            this.battleState.inProgress = false;
         }
 
-        this.trigger('state-update', state);
+        // Ganador
+        if (state.winner) {
+            if (this.battleState) {
+                this.battleState.winner = state.winner;
+            }
+        }
     }
 
-    // Registrar callback para evento
+    // ========== METODOS DE CALLBACK ==========
+    
     on(event, callback) {
         if (!this.callbacks.has(event)) {
             this.callbacks.set(event, []);
@@ -175,7 +261,6 @@ export class SocketClient {
         this.callbacks.get(event).push(callback);
     }
 
-    // Remover callback
     off(event, callback) {
         if (this.callbacks.has(event)) {
             const callbacks = this.callbacks.get(event);
@@ -186,7 +271,6 @@ export class SocketClient {
         }
     }
 
-    // Disparar evento
     trigger(event, data) {
         if (this.callbacks.has(event)) {
             this.callbacks.get(event).forEach(callback => {
@@ -199,46 +283,97 @@ export class SocketClient {
         }
     }
 
-    // Enviar mensaje al servidor
+    // ========== METODOS DE EMISION ==========
+    
     emit(event, data) {
         if (this.connected && this.socket) {
             this.socket.emit(event, data);
+            return true;
         } else {
             console.warn('Not connected to server, cannot emit:', event);
+            return false;
         }
     }
 
-    // Enviar mensaje de chat
     sendChatMessage(message) {
-        this.emit('chat-message', message);
+        return this.emit('chat-message', message);
     }
 
-    // Obtener estado actual
+    // ========== GETTERS ==========
+    
     getState() {
         return {
             connected: this.connected,
             battleState: this.battleState,
-            bettingState: this.bettingState
+            bettingState: this.bettingState,
+            socketId: this.socket?.id
         };
     }
 
-    // Desconectar
+    isConnected() {
+        return this.connected;
+    }
+
+    isBettingActive() {
+        return this.bettingState?.active || false;
+    }
+
+    isBattleInProgress() {
+        return this.battleState?.inProgress || false;
+    }
+
+    getBattleSeed() {
+        return this.battleState?.seed || null;
+    }
+
+    getWinner() {
+        return this.battleState?.winner || null;
+    }
+
+    // ========== UTILIDADES ==========
+    
     disconnect() {
         if (this.socket) {
             this.socket.disconnect();
             this.socket = null;
             this.connected = false;
+            this.battleState = null;
+            this.bettingState = null;
         }
     }
-    
-    // Simular apuesta (para testing)
-    testBet(fighter, amount) {
-        console.log(`Sending test bet: ${fighter} - ${amount} BNB`);
-        this.emit('test-bet', { fighter, amount });
+
+    reconnect() {
+        if (this.socket) {
+            this.socket.connect();
+        }
+    }
+
+    // Obtener latencia
+    async getPing() {
+        return new Promise((resolve) => {
+            const start = Date.now();
+            this.socket.emit('ping', () => {
+                resolve(Date.now() - start);
+            });
+            
+            // Timeout si no responde
+            setTimeout(() => resolve(-1), 5000);
+        });
+    }
+
+    // Metodo de debug
+    debugState() {
+        console.log('=== SOCKET CLIENT DEBUG ===');
+        console.log('Connected:', this.connected);
+        console.log('Socket ID:', this.socket?.id);
+        console.log('Betting State:', this.bettingState);
+        console.log('Battle State:', this.battleState);
+        console.log('Registered callbacks:', Array.from(this.callbacks.keys()));
+        console.log('==========================');
     }
 }
 
-// Hacer disponible globalmente para testing
+// Hacer disponible globalmente para debugging
 if (typeof window !== 'undefined') {
     window.SocketClient = SocketClient;
 }

@@ -317,69 +317,45 @@ export const isKeyPressed = (id, code, forControlHistory) => {
 	);
 };
 
+// CORREGIDO: Eliminar setTimeout que causaba problemas
 export const isLightPunch = (id, forControlHistory = false) => {
 	if (AI_MODE && aiControllers[id]) {
-		const wasPressed = aiControls[id].lightPunch;
-		// Reset después de leer para simular "press"
-		if (wasPressed && !forControlHistory) {
-			setTimeout(() => aiControls[id].lightPunch = false, 50);
-		}
-		return wasPressed;
+		return aiControls[id].lightPunch;
 	}
 	return isKeyPressed(id, Control.LIGHT_PUNCH, forControlHistory);
 };
 
 export const isMediumPunch = (id, forControlHistory = false) => {
 	if (AI_MODE && aiControllers[id]) {
-		const wasPressed = aiControls[id].mediumPunch;
-		if (wasPressed && !forControlHistory) {
-			setTimeout(() => aiControls[id].mediumPunch = false, 50);
-		}
-		return wasPressed;
+		return aiControls[id].mediumPunch;
 	}
 	return isKeyPressed(id, Control.MEDIUM_PUNCH, forControlHistory);
 };
 
 export const isHeavyPunch = (id, forControlHistory = false) => {
 	if (AI_MODE && aiControllers[id]) {
-		const wasPressed = aiControls[id].heavyPunch;
-		if (wasPressed && !forControlHistory) {
-			setTimeout(() => aiControls[id].heavyPunch = false, 50);
-		}
-		return wasPressed;
+		return aiControls[id].heavyPunch;
 	}
 	return isKeyPressed(id, Control.HEAVY_PUNCH, forControlHistory);
 };
 
 export const isLightKick = (id, forControlHistory = false) => {
 	if (AI_MODE && aiControllers[id]) {
-		const wasPressed = aiControls[id].lightKick;
-		if (wasPressed && !forControlHistory) {
-			setTimeout(() => aiControls[id].lightKick = false, 50);
-		}
-		return wasPressed;
+		return aiControls[id].lightKick;
 	}
 	return isKeyPressed(id, Control.LIGHT_KICK, forControlHistory);
 };
 
 export const isMediumKick = (id, forControlHistory = false) => {
 	if (AI_MODE && aiControllers[id]) {
-		const wasPressed = aiControls[id].mediumKick;
-		if (wasPressed && !forControlHistory) {
-			setTimeout(() => aiControls[id].mediumKick = false, 50);
-		}
-		return wasPressed;
+		return aiControls[id].mediumKick;
 	}
 	return isKeyPressed(id, Control.MEDIUM_KICK, forControlHistory);
 };
 
 export const isHeavyKick = (id, forControlHistory = false) => {
 	if (AI_MODE && aiControllers[id]) {
-		const wasPressed = aiControls[id].heavyKick;
-		if (wasPressed && !forControlHistory) {
-			setTimeout(() => aiControls[id].heavyKick = false, 50);
-		}
-		return wasPressed;
+		return aiControls[id].heavyKick;
 	}
 	return isKeyPressed(id, Control.HEAVY_KICK, forControlHistory);
 };

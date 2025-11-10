@@ -1,0 +1,274 @@
+{
+  "bets": [
+    {
+      "address": "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16",
+      "amount": 0.01,
+      "fighter": "KEN",
+      "timestamp": "2025-10-14T20:47:02.387Z",
+      "txHash": "0x76c7d368852de31b015420b2cc7c2dc908acb9715b8bb4b11a1f869a36437056",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16",
+      "amount": 0.015,
+      "fighter": "RYU",
+      "timestamp": "2025-10-14T20:47:25.969Z",
+      "txHash": "0x9d81e5f82680cdbbdd47b36d1e0cdf060f678185f656ba205d18ee86ba2c8b9c",
+      "cycleNumber": 1
+    }
+  ],
+  "battles": [
+    {
+      "seed": 274121,
+      "winner": "KEN",
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T18:15:15.350Z"
+    },
+    {
+      "seed": 52404,
+      "winner": "KEN",
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T18:35:49.348Z"
+    },
+    {
+      "seed": 144474,
+      "winner": "KEN",
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T18:42:14.848Z"
+    },
+    {
+      "seed": 974617,
+      "winner": "RYU",
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T18:45:26.978Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 578762,
+      "winner": "KEN",
+      "duration": "90.0",
+      "frames": 3429,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T19:57:00.164Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 517454,
+      "winner": "RYU",
+      "duration": "90.0",
+      "frames": 3433,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T20:16:32.540Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 572961,
+      "winner": "KEN",
+      "duration": "90.0",
+      "frames": 3418,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T20:34:43.227Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 52751,
+      "winner": "KEN",
+      "duration": "90.0",
+      "frames": 3487,
+      "totalPools": {
+        "RYU": 0.015,
+        "KEN": 0.01
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16",
+            "amount": 0.015,
+            "fighter": "RYU",
+            "timestamp": "2025-10-14T20:47:25.969Z",
+            "txHash": "0x9d81e5f82680cdbbdd47b36d1e0cdf060f678185f656ba205d18ee86ba2c8b9c",
+            "cycleNumber": 1
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16",
+            "amount": 0.01,
+            "fighter": "KEN",
+            "timestamp": "2025-10-14T20:47:02.387Z",
+            "txHash": "0x76c7d368852de31b015420b2cc7c2dc908acb9715b8bb4b11a1f869a36437056",
+            "cycleNumber": 1
+          }
+        ]
+      },
+      "timestamp": "2025-10-14T20:51:34.481Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 655196,
+      "winner": "KEN",
+      "duration": "90.0",
+      "frames": 3533,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T21:30:56.875Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 871006,
+      "winner": "KEN",
+      "duration": "90.0",
+      "frames": 4247,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T21:43:48.025Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 88467,
+      "winner": "RYU",
+      "duration": "90.0",
+      "frames": 4335,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T21:53:38.622Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 875192,
+      "winner": "RYU",
+      "duration": "90.0",
+      "frames": 4481,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T22:07:37.401Z"
+    },
+    {
+      "cycleNumber": 2,
+      "seed": 902471,
+      "winner": "KEN",
+      "duration": "90.0",
+      "frames": 4239,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-10-14T22:13:37.436Z"
+    }
+  ],
+  "payments": [
+    {
+      "type": "house_fee",
+      "amount": 0.00075,
+      "cycleNumber": 1,
+      "success": true,
+      "hash": "0xf61324294a70ea3cf1cca448d18ee5a6bf9a0474c1fcc80bdb3861dd4866bf57",
+      "from": "0x04C9BA94AA390cBE87a0a1119b2D6711319a6b16",
+      "to": "0x9cC395d27dAB9641482E78b79c0883Fc757F0e14",
+      "timestamp": "2025-10-14T20:51:37.354Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16",
+      "originalBet": 0.01,
+      "payout": 0.02425,
+      "profit": 0.01425,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_ERROR_1760475098546",
+      "from": "simulated",
+      "to": "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16",
+      "amount": 0.02425,
+      "error": "Returned error: nonce too low: next nonce 4, tx nonce 3",
+      "timestamp": "2025-10-14T20:51:38.546Z"
+    }
+  ],
+  "stats": {
+    "totalBattles": 13,
+    "ryuWins": 4,
+    "kenWins": 9,
+    "totalVolume": 0.025,
+    "totalPlayers": [
+      "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16"
+    ],
+    "lastBattle": "2025-10-14T22:13:37.436Z"
+  }
+}
