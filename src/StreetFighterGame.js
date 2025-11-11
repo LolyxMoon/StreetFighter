@@ -28,7 +28,7 @@ export class StreetFighterGame {
 	
 	// NUEVO: Cliente Socket.io
 	socketClient = null;
-	serverUrl = window.GAME_SERVER_URL || 'https://streetfighterbet.ngrok.dev';
+	serverUrl = window.GAME_SERVER_URL || 'https://streetfighterbet.ngrok.app';
 
 	changeScene = (SceneClass, config = {}) => {
 		this.contextHandler.startDimDown();
@@ -216,6 +216,6 @@ export class StreetFighterGame {
 }
 
 // Configuración global del servidor (puede ser sobreescrita)
-window.GAME_SERVER_URL = window.location.hostname === 'https://streetfighterbet.ngrok.dev' 
+window.GAME_SERVER_URL = window.location.hostname === 'https://streetfighterbet.ngrok.app' 
 	? 'http://localhost:3000' 
-	: 'https://streetfighterbet.ngrok.dev'; // Cambiar a tu dominio real
+	: 'https://streetfighterbet.ngrok.app'; // Cambiar a tu dominio real
