@@ -1,219 +1,863 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="./public/images/vsLogo.png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Street Fighter Betting - Live AI Battles</title>
-    <meta name="description" content="Watch live AI Street Fighter battles and bet with BNB on BSC. Battles every 5 minutes, fully automated betting system.">
-    <link rel="stylesheet" href="src/style.css" />
-</head>
-<body>
-    <main>
-        <canvas width="382px" height="224px"></canvas>
-    </main>
-
-    <!-- Audio Elements -->
-    <audio id="kensTheme" src="./public/sounds/kens-theme.ogg" preload="auto" loop></audio>
-    <audio id="sound-fighter-land" src="./public/sounds/land.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-light-kick-hit" src="./public/sounds/light-kick-hit.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-medium-kick-hit" src="./public/sounds/medium-kick-hit.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-heavy-kick-hit" src="./public/sounds/heavy-kick-hit.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-light-attack" src="./public/sounds/light-attack.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-medium-attack" src="./public/sounds/medium-attack.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-heavy-attack" src="./public/sounds/heavy-attack.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-light-punch-hit" src="./public/sounds/light-punch-hit.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-medium-punch-hit" src="./public/sounds/medium-punch-hit.ogg" preload="auto"></audio>
-    <audio id="sound-fighter-heavy-punch-hit" src="./public/sounds/heavy-punch-hit.ogg" preload="auto"></audio>
-    <audio id="sound-ken-hadouken" src="./public/sounds/hadouken.ogg" preload="auto"></audio>
-    <audio id="sound-ryu-hadouken" src="./public/sounds/hadouken.ogg" preload="auto"></audio>
-
-    <!-- Image Assets (hidden) -->
-    <img id="KenStage" src="public/images/kenstage.png" alt="kenstage" style="display:none;" />
-    <img id="hud" src="public/images/hud.png" alt="HUD" style="display:none;" />
-    <img id="KenImage" src="./public/images/ken.png" style="display:none;" />
-    <img id="RyuImage" src="public/images/Ryu.png" style="display:none;" />
-    <img id="ShadowImage" src="./public/images/shadow.png" style="display:none;" />
-    <img id="Decals" src="./public/images/decals.png" style="display:none;" />
-    <img id="Controls" src="./public/images/Controls.png" style="display:none;" />
-    <img id="Logo" src="./public/images/logo.png" style="display:none;" />
-    <img id="Winner" src="./public/images/winnerText.png" style="display:none;" />
-
-    <!-- External Libraries -->
-    <!-- Socket.io Client -->
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" 
-        crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Fighter Betting - Live AI Battles on BNB</title>
+    <meta name="description" content="Watch live AI Street Fighter battles and bet with BNB. Real-time betting system.">
+    <link rel="icon" href="./public/images/vsLogo.png">
     
-    <!-- QR Code Generator -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-
-    <!-- Server URL Configuration -->
-    <script>
-        // ============================================
-        // CONFIGURACION PARA NGROK
-        // ============================================
-        
-        (function() {
-            const hostname = window.location.hostname;
-            const protocol = window.location.protocol;
-            
-            let serverUrl;
-            
-            // Si estamos en ngrok, usar el mismo dominio
-            if (hostname.includes('ngrok') || hostname === 'streetfighterbet.ngrok.dev') {
-                // Usar el mismo dominio de ngrok para servidor
-                serverUrl = protocol + '//' + hostname;
-                console.log('🚇 Ngrok domain detected');
-            } 
-            // Si estamos en localhost (para testing local)
-            else if (hostname === 'localhost' || hostname === '127.0.0.1') {
-                serverUrl = 'http://localhost:3000';
-                console.log('🔧 Local development mode');
-            }
-            // Cualquier otro dominio
-            else {
-                serverUrl = protocol + '//' + hostname;
-                console.log('🌐 Production domain');
-            }
-            
-            // Override manual via URL parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const serverOverride = urlParams.get('server');
-            if (serverOverride) {
-                serverUrl = serverOverride;
-                console.log('⚠️ Server URL manually overridden');
-            }
-            
-            window.GAME_SERVER_URL = serverUrl;
-            
-            console.log('%c╔════════════════════════════════════════╗', 'color: #FFD700');
-            console.log('%c║   STREET FIGHTER BETTING SYSTEM       ║', 'color: #FFD700; font-weight: bold');
-            console.log('%c╠════════════════════════════════════════╣', 'color: #FFD700');
-            console.log('%c║ URL:      ' + serverUrl.padEnd(30) + '║', 'color: #00FF00');
-            console.log('%c║ Network:  BSC Mainnet                 ║', 'color: #FFD700');
-            console.log('%c║ Cycle:    5 minutes                   ║', 'color: #FFD700');
-            console.log('%c╚════════════════════════════════════════╝', 'color: #FFD700');
-        })();
-    </script>
-
-    <!-- Main Game Script (ES Module) -->
-    <script type="module" src="src/index.js"></script>
-
-    <!-- Loading Indicator -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
     <style>
-        #loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #FFD700;
+            text-shadow: 3px 3px 0px #FF0000;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 10px;
+            color: #AAA;
+            letter-spacing: 2px;
+        }
+
+        .timer-section {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #FF0000;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .timer-label {
+            font-size: 12px;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .timer-display {
+            font-size: 36px;
+            color: #FF0000;
+            text-shadow: 2px 2px 0px #000;
+            letter-spacing: 3px;
+        }
+
+        .phase-indicator {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FFD700;
+            display: inline-block;
+            font-size: 10px;
+            border-radius: 5px;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .game-container {
+            flex: 1;
+            min-width: 500px;
             background: #000;
+            border: 3px solid #FFD700;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-container iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+
+        .betting-panel {
+            flex: 0 0 400px;
             display: flex;
             flex-direction: column;
+            gap: 20px;
+        }
+
+        .fighter-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #FFD700;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fighter-card.ryu {
+            border-color: #FF0000;
+        }
+
+        .fighter-card.ken {
+            border-color: #FFD700;
+        }
+
+        .fighter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .fighter-header {
+            display: flex;
             align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            color: #fff;
-            font-family: Arial, sans-serif;
+            gap: 15px;
+            margin-bottom: 15px;
         }
-        
-        #loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #333;
-            border-top: 5px solid #FFD700;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+
+        .fighter-avatar {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #FFD700;
+            border-radius: 5px;
+            background: #000;
         }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        #loading-text {
-            margin-top: 20px;
+
+        .fighter-info h2 {
             font-size: 18px;
             color: #FFD700;
+            margin-bottom: 5px;
         }
-        
-        #loading-status {
-            margin-top: 10px;
-            font-size: 14px;
+
+        .fighter-stats {
+            font-size: 8px;
             color: #AAA;
         }
-        
-        .loading-complete {
-            opacity: 0;
-            transition: opacity 0.5s ease-out;
-            pointer-events: none;
+
+        .pool-display {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #FFD700;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
         }
-    </style>
 
-    <div id="loading-overlay">
-        <div id="loading-spinner"></div>
-        <div id="loading-text">STREET FIGHTER</div>
-        <div id="loading-status">Loading assets...</div>
-    </div>
+        .pool-label {
+            font-size: 10px;
+            color: #AAA;
+            margin-bottom: 5px;
+        }
 
-    <script>
-        // Loading management
-        (function() {
-            let assetsLoaded = 0;
-            const totalAssets = document.querySelectorAll('img, audio').length;
-            const loadingStatus = document.getElementById('loading-status');
-            const loadingOverlay = document.getElementById('loading-overlay');
-            
-            function updateLoadingStatus() {
-                assetsLoaded++;
-                const percentage = Math.floor((assetsLoaded / totalAssets) * 100);
-                loadingStatus.textContent = `Loading assets... ${percentage}%`;
-                
-                if (assetsLoaded >= totalAssets) {
-                    setTimeout(() => {
-                        loadingStatus.textContent = 'Connecting to server...';
-                        
-                        // Wait a bit more for socket connection
-                        setTimeout(() => {
-                            loadingStatus.textContent = 'Ready!';
-                            loadingOverlay.classList.add('loading-complete');
-                            
-                            // Remove overlay after fade
-                            setTimeout(() => {
-                                loadingOverlay.remove();
-                            }, 500);
-                        }, 1000);
-                    }, 200);
-                }
+        .pool-amount {
+            font-size: 24px;
+            color: #FFD700;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .pool-count {
+            font-size: 8px;
+            color: #AAA;
+            margin-top: 5px;
+        }
+
+        .wallet-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: 3px solid #FFD700;
+            border-radius: 5px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .wallet-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #FFD700;
+        }
+
+        .wallet-button:active {
+            transform: scale(0.95);
+        }
+
+        .wallet-button.ryu {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            border-color: #FF0000;
+            color: #fff;
+        }
+
+        .wallet-button.ken {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-color: #FFD700;
+            color: #000;
+        }
+
+        .wallet-address {
+            font-size: 8px;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 3px;
+            word-break: break-all;
+            color: #FFD700;
+        }
+
+        .bettors-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        .bettor-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            margin-bottom: 5px;
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 3px solid #FFD700;
+            font-size: 8px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .bettor-address {
+            color: #AAA;
+            flex: 1;
+        }
+
+        .bettor-amount {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .history-section {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #FFD700;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .history-header {
+            font-size: 14px;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .history-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .history-item {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #FFD700;
+            border-radius: 5px;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .history-round {
+            font-size: 10px;
+            color: #AAA;
+        }
+
+        .history-fighters {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 10px;
+        }
+
+        .history-winner {
+            color: #00FF00;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .history-loser {
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .history-pools {
+            text-align: right;
+            font-size: 8px;
+            color: #FFD700;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 255, 0, 0.9);
+            color: #000;
+            padding: 15px 20px;
+            border-radius: 5px;
+            font-size: 10px;
+            animation: toastIn 0.3s ease-out;
+            z-index: 1000;
+            border: 2px solid #00FF00;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FFD700;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
             }
             
-            // Track image loading
-            document.querySelectorAll('img').forEach(img => {
-                if (img.complete) {
-                    updateLoadingStatus();
-                } else {
-                    img.addEventListener('load', updateLoadingStatus);
-                    img.addEventListener('error', updateLoadingStatus);
-                }
-            });
+            .betting-panel {
+                flex: 1 1 auto;
+            }
             
-            // Track audio loading
-            document.querySelectorAll('audio').forEach(audio => {
-                audio.addEventListener('canplaythrough', updateLoadingStatus, { once: true });
-                audio.addEventListener('error', updateLoadingStatus, { once: true });
-            });
-        })();
-    </script>
+            .game-container {
+                min-width: 100%;
+            }
+        }
 
-    <!-- Error Handler -->
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #FFD700;
+            font-size: 10px;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="./public/images/Street_Fighter_Banner.webp" 
+         alt="Street Fighter Betting Arena" 
+         class="header-banner">
+</div>
+
+    <div class="timer-section">
+        <div class="timer-label">NEXT BATTLE IN:</div>
+        <div class="timer-display" id="countdown">--:--</div>
+        <div class="phase-indicator" id="phase-indicator">CONNECTING...</div>
+    </div>
+
+    <div class="main-container">
+        <div class="game-container">
+            <iframe id="game-iframe" src="game.html"></iframe>
+        </div>
+
+        <div class="betting-panel">
+            <div class="fighter-card ryu">
+                <div class="fighter-header">
+                    <img class="fighter-avatar" src="public/images/Ryu_face.gif" alt="Ryu">
+                    <div class="fighter-info">
+                        <h2>RYU</h2>
+                        <div class="fighter-stats">SHOTOKAN FIGHTER</div>
+                    </div>
+                </div>
+
+                <div class="pool-display">
+                    <div class="pool-label">TOTAL POOL</div>
+                    <div class="pool-amount" id="ryu-pool">0.000 BNB</div>
+                    <div class="pool-count" id="ryu-count">0 bets</div>
+                </div>
+
+                <button class="wallet-button ryu" onclick="copyWallet('ryu')">
+                    📋 CLICK TO COPY WALLET
+                </button>
+                
+                <div class="wallet-address" id="ryu-wallet">Loading...</div>
+
+                <div class="bettors-list" id="ryu-bettors">
+                    <div class="loading">Waiting for bets</div>
+                </div>
+            </div>
+
+            <div class="fighter-card ken">
+                <div class="fighter-header">
+                    <img class="fighter-avatar" src="public/images/ken_face.gif" alt="Ken">
+                    <div class="fighter-info">
+                        <h2>KEN</h2>
+                        <div class="fighter-stats">ANSATSUKEN MASTER</div>
+                    </div>
+                </div>
+
+                <div class="pool-display">
+                    <div class="pool-label">TOTAL POOL</div>
+                    <div class="pool-amount" id="ken-pool">0.000 BNB</div>
+                    <div class="pool-count" id="ken-count">0 bets</div>
+                </div>
+
+                <button class="wallet-button ken" onclick="copyWallet('ken')">
+                    📋 CLICK TO COPY WALLET
+                </button>
+                
+                <div class="wallet-address" id="ken-wallet">Loading...</div>
+
+                <div class="bettors-list" id="ken-bettors">
+                    <div class="loading">Waiting for bets</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="history-section">
+            <div class="history-header">⚔️ BATTLE HISTORY ⚔️</div>
+            <div class="history-list" id="history-list">
+                <div class="loading">Loading battle history</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <!-- CONTINÚA EN PARTE 2: JavaScript -->
     <script>
-        window.addEventListener('error', function(e) {
-            console.error('Global error:', e.error);
-        });
+        // ============================================
+        // CONFIGURACIÓN DEL SERVIDOR
+        // ============================================
+        const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
         
-        window.addEventListener('unhandledrejection', function(e) {
-            console.error('Unhandled promise rejection:', e.reason);
+        let serverUrl;
+        if (hostname.includes('ngrok') || hostname === 'streetfighterbet.ngrok.app') {
+            serverUrl = protocol + '//' + hostname;
+        } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            serverUrl = 'http://localhost:3000';
+        } else {
+            serverUrl = protocol + '//' + hostname + ':3000';
+        }
+
+        console.log('🎮 Connecting to server:', serverUrl);
+
+        // ============================================
+        // SOCKET CONNECTION
+        // ============================================
+        const socket = io(serverUrl, {
+            transports: ['websocket', 'polling'],
+            reconnection: true,
+            reconnectionDelay: 1000,
+            reconnectionAttempts: 10
         });
+
+        let wallets = { ryu: null, ken: null };
+        let bettorsData = { ryu: [], ken: [] };
+        let currentPhase = 'WAITING';
+        let nextBattleTime = null;
+        let countdownInterval = null;
+
+        // ============================================
+        // SOCKET EVENTS - SINCRONIZACIÓN EN TIEMPO REAL
+        // ============================================
+        
+        socket.on('connect', () => {
+            console.log('✅ Connected to server');
+            updatePhaseIndicator('CONNECTED');
+        });
+
+        socket.on('disconnect', () => {
+            console.log('❌ Disconnected');
+            updatePhaseIndicator('DISCONNECTED');
+        });
+
+        // CRÍTICO: Estado actual al conectarse o reconectarse
+        // Esto asegura que todos vean lo mismo sin importar cuándo entraron
+        socket.on('current-state', (data) => {
+            console.log('📊 Current state received:', data);
+            updateCompleteUI(data);
+        });
+
+        // Fase de apuestas iniciada
+        socket.on('betting-phase-started', (data) => {
+            console.log('💰 Betting phase started', data);
+            currentPhase = 'BETTING';
+            updatePhaseIndicator('BETTING OPEN');
+            
+            if (data.wallets) {
+                wallets = data.wallets;
+                document.getElementById('ryu-wallet').textContent = data.wallets.RYU || 'Loading...';
+                document.getElementById('ken-wallet').textContent = data.wallets.KEN || 'Loading...';
+            }
+            
+            if (data.nextBattleTime) {
+                nextBattleTime = new Date(data.nextBattleTime);
+                startCountdown();
+            }
+            
+            // Resetear bettors
+            bettorsData = { ryu: [], ken: [] };
+            renderBettors('ryu', []);
+            renderBettors('ken', []);
+        });
+
+        // Nueva apuesta - TODOS los usuarios ven esto en tiempo real
+        socket.on('new-bet', (data) => {
+            console.log('💰 New bet:', data);
+            
+            const fighter = data.fighter.toLowerCase();
+            
+            // Agregar a la lista local
+            if (!bettorsData[fighter]) {
+                bettorsData[fighter] = [];
+            }
+            
+            bettorsData[fighter].push({
+                address: data.address,
+                amount: data.amount,
+                timestamp: Date.now()
+            });
+
+            // Actualizar UI inmediatamente
+            renderBettors(fighter, bettorsData[fighter]);
+            showToast(`💰 New bet: ${parseFloat(data.amount).toFixed(3)} BNB on ${data.fighter.toUpperCase()}!`);
+        });
+
+        // Pools actualizados
+        socket.on('pools-updated', (data) => {
+            if (data.totalPools) {
+                document.getElementById('ryu-pool').textContent = `${parseFloat(data.totalPools.RYU || 0).toFixed(3)} BNB`;
+                document.getElementById('ken-pool').textContent = `${parseFloat(data.totalPools.KEN || 0).toFixed(3)} BNB`;
+            }
+        });
+
+        // Apuestas cerradas
+        socket.on('betting-closed', (data) => {
+            console.log('🔒 Betting closed');
+            currentPhase = 'CLOSED';
+            updatePhaseIndicator('BETTING CLOSED');
+            stopCountdown();
+        });
+
+        // Countdown para batalla
+        socket.on('battle-countdown', (seconds) => {
+            updatePhaseIndicator(`BATTLE IN ${seconds}s`);
+        });
+
+        // Batalla iniciada
+        socket.on('battle-started', (data) => {
+            console.log('⚔️ Battle started!', data);
+            currentPhase = 'BATTLE';
+            updatePhaseIndicator('⚔️ BATTLE IN PROGRESS');
+        });
+
+        // Batalla terminada
+        socket.on('battle-ended', (data) => {
+            console.log('🏆 Battle ended!', data);
+            currentPhase = 'ENDED';
+            updatePhaseIndicator(`🏆 ${data.winner} WINS!`);
+            
+            // Agregar al historial
+            if (data.winner) {
+                addBattleToHistory({
+                    winner: data.winner,
+                    pools: data.totalPools,
+                    timestamp: new Date()
+                });
+            }
+        });
+
+        // ============================================
+        // UI UPDATE FUNCTIONS
+        // ============================================
+        
+        function updateCompleteUI(state) {
+            // Phase
+            if (state.phase) {
+                currentPhase = state.phase;
+                updatePhaseIndicator(state.phase);
+            }
+
+            // Wallets
+            if (state.wallets) {
+                wallets = state.wallets;
+                document.getElementById('ryu-wallet').textContent = state.wallets.RYU || 'Loading...';
+                document.getElementById('ken-wallet').textContent = state.wallets.KEN || 'Loading...';
+            }
+
+            // Pools
+            if (state.totalPools) {
+                document.getElementById('ryu-pool').textContent = `${parseFloat(state.totalPools.RYU || 0).toFixed(3)} BNB`;
+                document.getElementById('ken-pool').textContent = `${parseFloat(state.totalPools.KEN || 0).toFixed(3)} BNB`;
+            }
+
+            // Bets
+            if (state.bets) {
+                // RYU
+                if (state.bets.RYU) {
+                    bettorsData.ryu = state.bets.RYU;
+                    document.getElementById('ryu-count').textContent = `${state.bets.RYU.length} bets`;
+                    renderBettors('ryu', state.bets.RYU);
+                }
+                
+                // KEN
+                if (state.bets.KEN) {
+                    bettorsData.ken = state.bets.KEN;
+                    document.getElementById('ken-count').textContent = `${state.bets.KEN.length} bets`;
+                    renderBettors('ken', state.bets.KEN);
+                }
+            }
+
+            // Timer
+            if (state.nextBattleTime) {
+                nextBattleTime = new Date(state.nextBattleTime);
+                startCountdown();
+            }
+
+            // Battle in progress
+            if (state.battleInProgress || state.phase === 'BATTLE') {
+                currentPhase = 'BATTLE';
+                updatePhaseIndicator('⚔️ BATTLE IN PROGRESS');
+            }
+        }
+
+        function renderBettors(fighter, bettors) {
+            const container = document.getElementById(`${fighter}-bettors`);
+            
+            if (!bettors || bettors.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:#888; font-size:8px; padding:10px;">No bets yet</div>';
+                return;
+            }
+
+            // Mostrar últimos 10 bettors, más recientes primero
+            const recentBets = bettors.slice(-10).reverse();
+            
+            container.innerHTML = recentBets.map(bet => `
+                <div class="bettor-item">
+                    <span class="bettor-address">${formatAddress(bet.address)}</span>
+                    <span class="bettor-amount">${parseFloat(bet.amount).toFixed(3)} BNB</span>
+                </div>
+            `).join('');
+        }
+
+        function addBattleToHistory(battle) {
+            const historyList = document.getElementById('history-list');
+            
+            // Remover "loading" si existe
+            const loading = historyList.querySelector('.loading');
+            if (loading) loading.remove();
+            
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            historyItem.style.animation = 'slideIn 0.5s ease-out';
+            
+            const totalPool = (parseFloat(battle.pools?.RYU || 0) + parseFloat(battle.pools?.KEN || 0)).toFixed(3);
+            const timeStr = new Date(battle.timestamp).toLocaleTimeString();
+            
+            historyItem.innerHTML = `
+                <div class="history-round">${timeStr}</div>
+                <div class="history-fighters">
+                    <span class="${battle.winner === 'RYU' ? 'history-winner' : 'history-loser'}">RYU</span>
+                    <span>VS</span>
+                    <span class="${battle.winner === 'KEN' ? 'history-winner' : 'history-loser'}">KEN</span>
+                </div>
+                <div class="history-pools">
+                    Pool: ${totalPool} BNB<br>
+                    Winner: ${battle.winner}
+                </div>
+            `;
+            
+            // Insertar al principio
+            historyList.insertBefore(historyItem, historyList.firstChild);
+            
+            // Mantener solo últimos 10
+            while (historyList.children.length > 10) {
+                historyList.removeChild(historyList.lastChild);
+            }
+        }
+
+        function startCountdown() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            
+            countdownInterval = setInterval(() => {
+                if (!nextBattleTime) return;
+                
+                const now = Date.now();
+                const timeLeft = Math.max(0, nextBattleTime - now);
+                
+                const minutes = Math.floor(timeLeft / 60000);
+                const seconds = Math.floor((timeLeft % 60000) / 1000);
+                
+                document.getElementById('countdown').textContent = 
+                    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    stopCountdown();
+                }
+            }, 100); // Actualizar cada 100ms para suavidad
+        }
+
+        function stopCountdown() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+        }
+
+        function updatePhaseIndicator(phase) {
+            const indicator = document.getElementById('phase-indicator');
+            
+            const phaseMap = {
+                'BETTING': '💰 BETTING OPEN',
+                'CLOSED': '🔒 BETTING CLOSED',
+                'COUNTDOWN': '⏳ STARTING SOON',
+                'BATTLE': '⚔️ BATTLE IN PROGRESS',
+                'ENDED': '🏆 BATTLE ENDED',
+                'PAYING': '💸 PROCESSING PAYMENTS',
+                'WAITING': '⏸️ WAITING FOR NEXT ROUND',
+                'CONNECTED': '✅ CONNECTED',
+                'DISCONNECTED': '❌ DISCONNECTED'
+            };
+            
+            indicator.textContent = phaseMap[phase] || phase;
+        }
+
+        function copyWallet(fighter) {
+            const wallet = wallets[fighter];
+            if (!wallet) {
+                showToast('❌ Wallet not loaded yet!');
+                return;
+            }
+
+            navigator.clipboard.writeText(wallet).then(() => {
+                showToast(`✅ ${fighter.toUpperCase()} WALLET COPIED!`);
+            }).catch(() => {
+                // Fallback para navegadores sin clipboard API
+                const textarea = document.createElement('textarea');
+                textarea.value = wallet;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast(`✅ ${fighter.toUpperCase()} WALLET COPIED!`);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function formatAddress(address) {
+            if (!address) return 'Loading...';
+            return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+        }
+
+        // ============================================
+        // INIT - Al cargar la página
+        // ============================================
+        
+        // Pedir estado actual apenas se conecte
+        socket.on('connect', () => {
+            console.log('✅ Connected, requesting current state...');
+            socket.emit('request-state');
+        });
+
+        // Polling periódico para asegurar sincronización
+        setInterval(() => {
+            if (socket.connected && currentPhase === 'BETTING') {
+                socket.emit('request-state');
+            }
+        }, 5000); // Cada 5 segundos
+
+        console.log('🎮 Street Fighter Betting initialized');
     </script>
 </body>
 </html>

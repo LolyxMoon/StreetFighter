@@ -1,4 +1,4 @@
-// src/scenes/BattleScene.js - VERSION SINCRONIZADA
+// src/scenes/BattleScene.js - VERSION SIN RESULTSSCENE
 import {
 	SCENE_WIDTH,
 	STAGE_MID_POINT,
@@ -15,7 +15,7 @@ import { FRAME_TIME, GAME_SPEED } from '../constants/game.js';
 import { Camera } from '../engine/Camera.js';
 import { EntityList } from '../engine/EntityList.js';
 import { Ken, Ryu } from '../entitites/fighters/index.js';
-import { ResultsScene } from './ResultsScene.js';
+// ❌ REMOVIDO: import { ResultsScene } from './ResultsScene.js';
 import {
 	HeavyHitSplash,
 	LightHitSplash,
@@ -80,9 +80,6 @@ export class BattleScene {
 			new StatusBar(this.fighters, this.onTimeEnd),
 		];
 		
-		// YA NO USAR BETTING OVERLAY - StartScene maneja las apuestas
-		// this.bettingOverlay = null;
-		
 		resetGameState();
 		
 		// Si estamos en fase de apuestas, NO iniciar ronda todavía
@@ -94,7 +91,7 @@ export class BattleScene {
 			// IMPORTANTE: Iniciar batalla inmediatamente
 			console.log('Battle mode - starting round now');
 			this.battlePaused = false;
-			this.battleStarted = true; // AGREGAR ESTA LÍNEA
+			this.battleStarted = true;
 			this.startRound();
 			
 			// Pequeño delay para asegurar que fighters estén listos
@@ -119,20 +116,7 @@ export class BattleScene {
 		
 		console.log('Setting up BattleScene socket listeners...');
 		
-		// NOTA: Esta implementación usa IA LOCAL en cada cliente.
-		// Los listeners de 'battle-frame' y 'sync-battle' están desactivados
-		// para evitar conflictos entre la IA del servidor y la IA local.
-		// Cada cliente simula la batalla de forma independiente usando el mismo seed.
-		//
-		// FLUJO DE BATALLA:
-		// 1. Servidor envía 'battle-started' con seed
-		// 2. Cada cliente simula batalla completa con ese seed
-		// 3. Cliente detecta ganador localmente (HP=0 o timeout)
-		// 4. Cliente envía 'battle-result' al servidor
-		// 5. Cliente solicita 'get-results' y muestra ResultsScene
-		// 6. Servidor procesa pagos y opcionalmente envía 'battle-ended'
-		
-		// Apuestas cerradas (no hacer nada, StartScene lo maneja)
+		// Apuestas cerradas
 		this.socketClient.on('betting-closed', (data) => {
 			console.log('BattleScene: Betting closed');
 			this.bettingPhase = false;
@@ -160,76 +144,6 @@ export class BattleScene {
 			}
 		});
 		
-		// Frame updates del servidor
-		this.socketClient.on('battle-frame', (data) => {
-			// DESACTIVADO: No sincronizar cuando hay IA local
-			// La IA local controla completamente la batalla
-			return;
-			
-			/* CÓDIGO VIEJO COMENTADO - Causaba conflicto con IA local
-			if (!this.battleStarted) return;
-			
-			if (data.state && data.state.fighters && this.fighters.length > 0) {
-				// Sincronizar posiciones desde el servidor
-				data.state.fighters.forEach((fighterData, index) => {
-					if (this.fighters[index]) {
-						// Actualizar posición con interpolación suave
-						const targetX = fighterData.position.x;
-						const currentX = this.fighters[index].position.x;
-						const diff = targetX - currentX;
-						
-						// Solo sincronizar si hay diferencia significativa (> 5px)
-						if (Math.abs(diff) > 5) {
-							this.fighters[index].position.x += diff * 0.3; // Interpolación
-						}
-						
-						// Actualizar HP
-						if (gameState.fighters[index]) {
-							gameState.fighters[index].hitPoints = fighterData.hitPoints;
-						}
-						
-						// Actualizar estado si cambió
-						if (fighterData.state !== this.fighters[index].currentState) {
-							// Solo actualizar estados importantes (KO, HURT)
-							if (fighterData.state === FighterState.KO || 
-								fighterData.state.includes('HURT')) {
-								this.fighters[index].changeState(fighterData.state);
-							}
-						}
-					}
-				});
-			}
-			*/
-		});
-		
-		// Sincronización para late joiners
-		this.socketClient.on('sync-battle', (data) => {
-			// DESACTIVADO: Cada cliente corre su propia IA local
-			return;
-			
-			/* CÓDIGO VIEJO COMENTADO - No necesario con IA local
-			console.log('BattleScene: Syncing with ongoing battle');
-			
-			this.battleSeed = data.seed;
-			this.bettingPhase = false;
-			this.battlePaused = false;
-			this.battleStarted = true;
-			
-			if (!this.fighters || this.fighters.length === 0) {
-				this.startRound();
-			}
-			
-			if (!this.aiControllers || this.aiControllers.length === 0) {
-				this.initializeAI();
-			}
-			
-			// Sincronizar estado
-			if (data.state) {
-				this.syncBattleState(data.state);
-			}
-			*/
-		});
-		
 		// Batalla terminada (del servidor)
 		this.socketClient.on('battle-ended', (data) => {
 			console.log('BattleScene: Server confirmed battle ended! Winner:', data.winner);
@@ -243,80 +157,42 @@ export class BattleScene {
 		});
 	}
 	
-	// ========== SINCRONIZACION ==========
-	
-	// NOTA: Este método no se usa actualmente porque cada cliente
-	// corre su propia IA local en lugar de sincronizar con el servidor
-	syncBattleState(serverState) {
-		if (!serverState.fighters || this.fighters.length === 0) return;
-		
-		serverState.fighters.forEach((fighterData, index) => {
-			if (this.fighters[index]) {
-				this.fighters[index].position.x = fighterData.position.x;
-				this.fighters[index].position.y = fighterData.position.y;
-				
-				if (gameState.fighters[index]) {
-					gameState.fighters[index].hitPoints = fighterData.hitPoints;
-				}
-			}
-		});
-		
-		if (serverState.winner) {
-			this.handleWinner(serverState.winner);
-		}
-	}
+	// ========== WINNER HANDLING ==========
 	
 	handleWinner(winner) {
-    this.battleEnded = true;
-    
-    if (winner === 'RYU') {
-        this.winnerId = 0;
-        if (this.fighters[0]) this.fighters[0].victory = true;
-        if (this.fighters[1]) this.fighters[1].changeState(FighterState.KO, { previous: Date.now() });
-    } else {
-        this.winnerId = 1;
-        if (this.fighters[1]) this.fighters[1].victory = true;
-        if (this.fighters[0]) this.fighters[0].changeState(FighterState.KO, { previous: Date.now() });
-    }
-    
-    // Esperar 3 segundos y luego mostrar resultados
-    setTimeout(() => {
-        if (this.socketClient) {
-            // Crear listener temporal
-            const resultsHandler = (data) => {
-                // Remover listener después de recibir
-                this.socketClient.off('results-data', resultsHandler);
-                this.goToResultsScene(winner, data);
-            };
-            
-            // Registrar listener
-            this.socketClient.on('results-data', resultsHandler);
-            
-            // Pedir resultados
-            this.socketClient.emit('get-results', { winner });
-            
-            // Timeout por si el servidor no responde
-            setTimeout(() => {
-                this.socketClient.off('results-data', resultsHandler);
-                this.goToResultsScene(winner, { winningBets: [], totalPayout: 0 });
-            }, 2000);
-        } else {
-            this.goToResultsScene(winner, { winningBets: [], totalPayout: 0 });
-        }
-    }, 3000);
-}
+		this.battleEnded = true;
+		
+		if (winner === 'RYU') {
+			this.winnerId = 0;
+			if (this.fighters[0]) this.fighters[0].victory = true;
+			if (this.fighters[1]) this.fighters[1].changeState(FighterState.KO, { previous: Date.now() });
+		} else {
+			this.winnerId = 1;
+			if (this.fighters[1]) this.fighters[1].victory = true;
+			if (this.fighters[0]) this.fighters[0].changeState(FighterState.KO, { previous: Date.now() });
+		}
+		
+		console.log('🏆 Winner:', winner);
+		
+		// ✅ CAMBIO: Esperar 3 segundos y volver a StartScene (NO ResultsScene)
+		setTimeout(() => {
+			console.log('⬅️ Returning to StartScene...');
+			this.goToStartScene();
+		}, 3000);
+	}
 	
-	goToResultsScene = (winner, resultsData) => {
+	// ✅ MODIFICADO: Ahora va directo a StartScene
+	goToStartScene = () => {
 		if (this.isAIBattle) {
 			setAIMode(false);
 		}
 		
-		this.changeScene(ResultsScene, {
-			socketClient: this.socketClient,
-			winner: winner,
-			winningBets: resultsData.winningBets || [],
-			totalPayout: resultsData.totalPayout || 0
-		});
+		// Limpiar listeners específicos de BattleScene
+		if (this.socketClient) {
+			// No desconectar el socket, solo limpiar callbacks locales si es necesario
+		}
+		
+		this.changeScene(StartScene, { socketClient: this.socketClient });
 	};
 	
 	// ========== AI ==========
@@ -448,23 +324,11 @@ export class BattleScene {
 		console.log('Round started with', this.fighters.length, 'fighters');
 	};
 
-	goToStartScene = () => {
-		if (this.isAIBattle) {
-			setAIMode(false);
-		}
-		
-		// Limpiar listeners específicos de BattleScene
-		if (this.socketClient) {
-			// No desconectar el socket, solo limpiar callbacks locales si es necesario
-		}
-		
-		this.changeScene(StartScene, { socketClient: this.socketClient });
-	};
-
 	drawWinnerText = (context, id) => {
 		context.drawImage(this.image, 0, 11 * id, 70, 9, 120, 60, 140, 30);
 	};
 
+	// ✅ MODIFICADO: onTimeEnd ahora llama a handleWinner que va a StartScene
 	onTimeEnd = (time) => {
 		// VALIDAR que los fighters existen
 		if (!this.fighters || this.fighters.length < 2) {
@@ -487,7 +351,7 @@ export class BattleScene {
 			winner = 'KEN';
 		}
 		
-		console.log('Battle ended by timeout, winner:', winner);
+		console.log('⏱️ Battle ended by timeout, winner:', winner);
 		
 		// Notificar al servidor
 		if (this.socketClient) {
@@ -497,7 +361,7 @@ export class BattleScene {
 			});
 		}
 		
-		// Manejar ganador (esto también mostrará ResultsScene)
+		// ✅ Manejar ganador (ahora va a StartScene)
 		this.handleWinner(winner);
 	};
 
@@ -505,6 +369,7 @@ export class BattleScene {
 		this.overlays.forEach((overlay) => overlay.update(time));
 	};
 
+	// ✅ MODIFICADO: updateFighterHP ahora llama a handleWinner que va a StartScene
 	updateFighterHP = (time) => {
 		if (this.battleEnded) return;
 		
@@ -514,18 +379,19 @@ export class BattleScene {
 					this.fighters[index].opponent.victory = true;
 				}
 				
-				// NUEVO: Determinar ganador y notificar
+				// Determinar ganador y notificar
 				const winner = (1 - index) === 0 ? 'RYU' : 'KEN';
-				console.log('Local battle ended by KO, winner:', winner);
+				console.log('💥 Battle ended by KO, winner:', winner);
 				
 				if (this.socketClient) {
 					this.socketClient.emit('battle-result', {
 						winner: winner,
-						seed: this.battleSeed
+						seed: this.battleSeed,
+						byKO: true
 					});
 				}
 				
-				// Manejar ganador (esto también mostrará ResultsScene)
+				// ✅ Manejar ganador (ahora va a StartScene)
 				this.handleWinner(winner);
 			}
 		});

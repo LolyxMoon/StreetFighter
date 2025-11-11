@@ -1,0 +1,483 @@
+// test/simulate-bets.html - Herramienta para testing sin BSC
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Fighter - Bet Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #000;
+            border: 2px solid #0f0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #0f0;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        .status {
+            background: #1a1a1a;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #0f0;
+        }
+
+        .status.connected {
+            border-color: #0f0;
+        }
+
+        .status.disconnected {
+            border-color: #f00;
+            color: #f00;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+
+        .section h2 {
+            color: #ff0;
+            margin-bottom: 15px;
+        }
+
+        .controls {
+            display: grid;
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        label {
+            min-width: 120px;
+            color: #0f0;
+        }
+
+        input, select {
+            flex: 1;
+            background: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #0ff;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button.danger {
+            background: #f00;
+            color: #fff;
+        }
+
+        button.danger:hover {
+            background: #ff5555;
+        }
+
+        .log {
+            background: #000;
+            border: 1px solid #0f0;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-left: 3px solid #0f0;
+            padding-left: 10px;
+        }
+
+        .log-entry.error {
+            border-left-color: #f00;
+            color: #f00;
+        }
+
+        .log-entry.success {
+            border-left-color: #0f0;
+        }
+
+        .log-entry.info {
+            border-left-color: #ff0;
+            color: #ff0;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-box {
+            background: #1a1a1a;
+            padding: 15px;
+            border: 1px solid #0f0;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            color: #ff0;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #0f0;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 STREET FIGHTER - BET SIMULATOR 🎮</h1>
+
+        <div class="status" id="status">
+            <strong>Status:</strong> <span id="connection-status">Connecting...</span><br>
+            <strong>Phase:</strong> <span id="current-phase">Unknown</span><br>
+            <strong>Cycle:</strong> <span id="cycle-number">0</span>
+        </div>
+
+        <div class="section">
+            <h2>⚡ Quick Actions</h2>
+            <div class="quick-actions">
+                <button onclick="quickBet('RYU', 0.001)">RYU 0.001 BNB</button>
+                <button onclick="quickBet('RYU', 0.01)">RYU 0.01 BNB</button>
+                <button onclick="quickBet('RYU', 0.1)">RYU 0.1 BNB</button>
+                <button onclick="quickBet('KEN', 0.001)">KEN 0.001 BNB</button>
+                <button onclick="quickBet('KEN', 0.01)">KEN 0.01 BNB</button>
+                <button onclick="quickBet('KEN', 0.1)">KEN 0.1 BNB</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Custom Bet</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label>Fighter:</label>
+                    <select id="fighter">
+                        <option value="RYU">RYU</option>
+                        <option value="KEN">KEN</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Amount (BNB):</label>
+                    <input type="number" id="amount" value="0.01" step="0.001" min="0.001">
+                </div>
+
+                <div class="control-group">
+                    <label>Address:</label>
+                    <input type="text" id="address" value="" placeholder="0x... (auto-generated)">
+                </div>
+
+                <button onclick="placeBet()">💰 PLACE BET</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🤖 Auto Betting</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label>Auto Bet Count:</label>
+                    <input type="number" id="auto-count" value="5" min="1" max="50">
+                </div>
+
+                <div class="control-group">
+                    <label>Interval (ms):</label>
+                    <input type="number" id="auto-interval" value="1000" min="100" step="100">
+                </div>
+
+                <div class="control-group">
+                    <button onclick="startAutoBetting()">▶️ Start Auto Betting</button>
+                    <button onclick="stopAutoBetting()" class="danger">⏹️ Stop</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Current Stats</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="ryu-pool">0.000</div>
+                    <div class="stat-label">RYU POOL</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="ken-pool">0.000</div>
+                    <div class="stat-label">KEN POOL</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="ryu-bets">0</div>
+                    <div class="stat-label">RYU BETS</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="ken-bets">0</div>
+                    <div class="stat-label">KEN BETS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📝 Log</h2>
+            <button onclick="clearLog()">Clear Log</button>
+            <div class="log" id="log"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <script>
+        // ============================================
+        // CONFIG
+        // ============================================
+        const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
+        
+        let serverUrl;
+        // Desarrollo local
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            serverUrl = 'http://localhost:3000';
+        } 
+        // Producción con tu dominio
+        else {
+            serverUrl = protocol + '//' + hostname;
+        }
+
+        log('info', `Connecting to: ${serverUrl}`);
+
+        // ============================================
+        // SOCKET CONNECTION
+        // ============================================
+        const socket = io(serverUrl, {
+            transports: ['websocket', 'polling'],
+            reconnection: true
+        });
+
+        let autoBettingInterval = null;
+        let currentPhase = 'UNKNOWN';
+
+        socket.on('connect', () => {
+            log('success', '✅ Connected to server');
+            updateStatus('Connected', 'connected');
+        });
+
+        socket.on('disconnect', () => {
+            log('error', '❌ Disconnected from server');
+            updateStatus('Disconnected', 'disconnected');
+        });
+
+        socket.on('current-state', (state) => {
+            log('info', `State: ${state.phase}`);
+            currentPhase = state.phase;
+            document.getElementById('current-phase').textContent = state.phase;
+            document.getElementById('cycle-number').textContent = state.cycleNumber || 0;
+            updateStats(state);
+        });
+
+        socket.on('betting-phase-started', (data) => {
+            log('success', '💰 Betting phase started!');
+            currentPhase = 'BETTING';
+            document.getElementById('current-phase').textContent = 'BETTING';
+        });
+
+        socket.on('bet-confirmed', (data) => {
+            log('success', `✓ Bet confirmed: ${data.amount} BNB on ${data.fighter}`);
+        });
+
+        socket.on('bet-error', (data) => {
+            log('error', `✗ Bet error: ${data.message}`);
+        });
+
+        socket.on('new-bet', (data) => {
+            log('info', `💰 ${data.fighter}: ${data.amount} BNB (Total: ${data.total})`);
+        });
+
+        socket.on('pools-updated', (data) => {
+            updateStats({ totalPools: data.totalPools });
+        });
+
+        socket.on('betting-closed', () => {
+            log('info', '🔒 Betting closed');
+            currentPhase = 'CLOSED';
+        });
+
+        socket.on('battle-started', (data) => {
+            log('success', `⚔️ Battle started! Seed: ${data.seed}`);
+            currentPhase = 'BATTLE';
+        });
+
+        socket.on('battle-ended', (data) => {
+            log('success', `🏆 Winner: ${data.winner}!`);
+            currentPhase = 'ENDED';
+        });
+
+        // ============================================
+        // FUNCTIONS
+        // ============================================
+        function generateAddress() {
+            const chars = '0123456789abcdef';
+            let address = '0x';
+            for (let i = 0; i < 40; i++) {
+                address += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return address;
+        }
+
+        function quickBet(fighter, amount) {
+            placeBetWithData(fighter, amount, generateAddress());
+        }
+
+        function placeBet() {
+            const fighter = document.getElementById('fighter').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            let address = document.getElementById('address').value;
+
+            if (!address) {
+                address = generateAddress();
+                document.getElementById('address').value = address;
+            }
+
+            placeBetWithData(fighter, amount, address);
+        }
+
+        function placeBetWithData(fighter, amount, address) {
+            if (currentPhase !== 'BETTING') {
+                log('error', '❌ Cannot bet: Not in betting phase');
+                alert('Betting phase is closed!');
+                return;
+            }
+
+            log('info', `Placing bet: ${amount} BNB on ${fighter}...`);
+
+            socket.emit('place-bet', {
+                fighter: fighter,
+                amount: amount,
+                address: address,
+                txHash: '0xSIMULATED_' + Date.now()
+            });
+        }
+
+        function startAutoBetting() {
+            if (autoBettingInterval) {
+                log('error', 'Auto betting already running');
+                return;
+            }
+
+            const count = parseInt(document.getElementById('auto-count').value);
+            const interval = parseInt(document.getElementById('auto-interval').value);
+
+            log('success', `🤖 Starting auto betting: ${count} bets every ${interval}ms`);
+
+            let betsPlaced = 0;
+            autoBettingInterval = setInterval(() => {
+                if (betsPlaced >= count) {
+                    stopAutoBetting();
+                    return;
+                }
+
+                const fighter = Math.random() > 0.5 ? 'RYU' : 'KEN';
+                const amount = (Math.random() * 0.1 + 0.001).toFixed(3);
+                placeBetWithData(fighter, parseFloat(amount), generateAddress());
+                betsPlaced++;
+            }, interval);
+        }
+
+        function stopAutoBetting() {
+            if (autoBettingInterval) {
+                clearInterval(autoBettingInterval);
+                autoBettingInterval = null;
+                log('info', '⏹️ Auto betting stopped');
+            }
+        }
+
+        function updateStatus(text, className) {
+            const statusEl = document.getElementById('status');
+            statusEl.className = 'status ' + className;
+            document.getElementById('connection-status').textContent = text;
+        }
+
+        function updateStats(state) {
+            if (state.totalPools) {
+                document.getElementById('ryu-pool').textContent = parseFloat(state.totalPools.RYU || 0).toFixed(3);
+                document.getElementById('ken-pool').textContent = parseFloat(state.totalPools.KEN || 0).toFixed(3);
+            }
+
+            if (state.bets) {
+                document.getElementById('ryu-bets').textContent = state.bets.RYU?.length || 0;
+                document.getElementById('ken-bets').textContent = state.bets.KEN?.length || 0;
+            }
+        }
+
+        function log(type, message) {
+            const logEl = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry ' + type;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logEl.appendChild(entry);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+            log('info', 'Log cleared');
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        log('info', '🎮 Bet simulator initialized');
+        log('info', 'Waiting for connection...');
+    </script>
+</body>
+</html>

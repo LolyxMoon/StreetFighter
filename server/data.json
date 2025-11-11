@@ -15,6 +15,398 @@
       "timestamp": "2025-10-14T20:47:25.969Z",
       "txHash": "0x9d81e5f82680cdbbdd47b36d1e0cdf060f678185f656ba205d18ee86ba2c8b9c",
       "cycleNumber": 1
+    },
+    {
+      "address": "0xb6c8f2764626a69ddf402999188f2800409112f1",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T10:14:36.628Z",
+      "txHash": "0xSIMULATED_1762856076628",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x5992efb15969bb4ed3aaade22645e8cc926dcfcd",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T10:14:37.402Z",
+      "txHash": "0xSIMULATED_1762856077402",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xe4621fc59616287359a8f10b20a9f07a4b4b27c4",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T10:14:37.767Z",
+      "txHash": "0xSIMULATED_1762856077750",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x40b85e0e0273a7cc84b625d4bf6d6c57b2da6d07",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:14:45.540Z",
+      "txHash": "0xSIMULATED_1762856085539",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xa066971bb13de093916c8f31f15230e4321d1d5a",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:14:46.183Z",
+      "txHash": "0xSIMULATED_1762856086180",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xfafc32ccf7cf8d66a0211221addcb6a052cffac0",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T10:24:37.779Z",
+      "txHash": "0xSIMULATED_1762856677779",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xc7a974878acd0ba9a70cd36ce8b37c19582860da",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:24:38.242Z",
+      "txHash": "0xSIMULATED_1762856678242",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xfb3d4f250a559aeb38d1ed76f614e0ba92f5de54",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:24:48.338Z",
+      "txHash": "0xSIMULATED_1762856688336",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x9fec0e8ced25544f786fba8e7e05e0e2406c6a85",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T10:35:05.428Z",
+      "txHash": "0xSIMULATED_1762857305428",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x4ea1c637482d7a128a3aa0113d9e71a0eb8b778b",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:35:05.990Z",
+      "txHash": "0xSIMULATED_1762857305990",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xb376d66fdf64e43796740fde550a0bb72adcc538",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:35:06.439Z",
+      "txHash": "0xSIMULATED_1762857306439",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x961fd26b5ad63540e7b07a38747af19c543a59af",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T10:44:20.054Z",
+      "txHash": "0xSIMULATED_1762857860054",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x512956c44788cbbf041a383322ea175932f7344d",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:44:20.387Z",
+      "txHash": "0xSIMULATED_1762857860372",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x39c24ff2be7e204785cae8af7cb612843d63fa3d",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:44:20.821Z",
+      "txHash": "0xSIMULATED_1762857860821",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x69c6549aadfc25729332023ccb54a5163290f49e",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:50:55.850Z",
+      "txHash": "0xSIMULATED_1762858255848",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xfd18e0b06bc167d0e1747cd9d59ee514f67ed700",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T10:50:56.514Z",
+      "txHash": "0xSIMULATED_1762858256513",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x7aa86529d4fd83457150498785c6cc5b3ac6c8b8",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:50:57.239Z",
+      "txHash": "0xSIMULATED_1762858257238",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x8af5fecba0e60eac286d8e339f80d529d30602cf",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T10:50:57.670Z",
+      "txHash": "0xSIMULATED_1762858257669",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x098b75f60c95b7f3f804a42f60aea10a5b99ecfc",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T11:39:25.684Z",
+      "txHash": "0xSIMULATED_1762861165684",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xda7497bb58d323030f4f02787b53c17186d68adc",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T11:39:26.142Z",
+      "txHash": "0xSIMULATED_1762861166142",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x4e14f5ebec6c41b5da769fdab00fad90ddc7b324",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T11:39:26.754Z",
+      "txHash": "0xSIMULATED_1762861166754",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xbeedf5c19305ef62faa7730ec05fbd26fa1a5aaf",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T11:47:54.571Z",
+      "txHash": "0xSIMULATED_1762861674570",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xd3dbc5e12fae0776c501a8af6acdde5a813bebb5",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T11:47:55.131Z",
+      "txHash": "0xSIMULATED_1762861675130",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xb33fbf20f75681f30fa79a186100701b732f9c64",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T11:47:55.592Z",
+      "txHash": "0xSIMULATED_1762861675591",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x047dbb88b035554f6398b44920dea2b7a262134d",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T11:49:29.366Z",
+      "txHash": "0xSIMULATED_1762861769366",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x403dfec6c2a7336c7c4860c76146f55ba6e316fa",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T11:49:29.754Z",
+      "txHash": "0xSIMULATED_1762861769754",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xbe6c72c98f33bf977b5659eb8b046d228361dec0",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:23:00.253Z",
+      "txHash": "0xSIMULATED_1762863780253",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x40bd57cf5bf87ba6f26846e42abadfa4139cba55",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T12:23:00.620Z",
+      "txHash": "0xSIMULATED_1762863780621",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xd040267d5323e0ba5afe38b0604163a8edf616fd",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:37:34.671Z",
+      "txHash": "0xSIMULATED_1762864654671",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xca21ab912690548b3f717edaf6eb8980460b2d09",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T12:37:34.963Z",
+      "txHash": "0xSIMULATED_1762864654964",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x85a512053460c481e97fc6f8b4b711e1d3741e8a",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:37:35.395Z",
+      "txHash": "0xSIMULATED_1762864655395",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x8a53f8f62d293ee8c2d19ceaf141dce59fc2ac67",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T12:37:35.724Z",
+      "txHash": "0xSIMULATED_1762864655725",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xa8a5d43ae1bc6cb1370f3722300b2b376320f645",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T12:37:36.081Z",
+      "txHash": "0xSIMULATED_1762864656063",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x4c15faffd50eea6a53a19e5f19aeee7e9d6a090a",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T12:42:56.364Z",
+      "txHash": "0xSIMULATED_1762864976364",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x74db942dbe1436f25a93391f53fcb4eb1988d536",
+      "amount": 0.01,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:42:56.948Z",
+      "txHash": "0xSIMULATED_1762864976948",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x709ae4e8e465bb3e89b46236b450ac4b59712379",
+      "amount": 0.01,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T12:42:57.277Z",
+      "txHash": "0xSIMULATED_1762864977277",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x75d23b09827745e4ef8df03c2470c63b70c6112e",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:42:57.537Z",
+      "txHash": "0xSIMULATED_1762864977537",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x92a09968cb07400ad1901a8117696b5be24e407d",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:43:07.818Z",
+      "txHash": "0xSIMULATED_1762864987818",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x0641265de25a3d22c063fa6a19d47d3607b81615",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:43:07.988Z",
+      "txHash": "0xSIMULATED_1762864987988",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x319779ee34033d5f5b562171b5bf1160015eb748",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:43:08.158Z",
+      "txHash": "0xSIMULATED_1762864988158",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x317643d5111e8e51c33796244f864a7112ea41c3",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:43:08.311Z",
+      "txHash": "0xSIMULATED_1762864988311",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x94f419ccd3acc41a0e1934577c8743b953aeaf16",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:43:08.481Z",
+      "txHash": "0xSIMULATED_1762864988481",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x00230a94c4704ac1b692bc30a10dc999e01e2d97",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:43:08.633Z",
+      "txHash": "0xSIMULATED_1762864988633",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0xc2097f50cde90a8f5a15c5d4c4841c126f042d0d",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T12:43:08.817Z",
+      "txHash": "0xSIMULATED_1762864988817",
+      "cycleNumber": 3
+    },
+    {
+      "address": "0x7ea337beb33cb99992318d8b6d73f79628ee9e54",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T13:08:14.158Z",
+      "txHash": "0xSIMULATED_1762866494158",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x6fc23cc271d82727a8eb1ab7271f778efbefa16c",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T13:08:14.416Z",
+      "txHash": "0xSIMULATED_1762866494417",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xa14cf314d7ffe2b553e90ba1b147dc1a7d09a875",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T13:08:15.069Z",
+      "txHash": "0xSIMULATED_1762866495070",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0xd5439366c629350695d08c3dbf2c1f478dc76cf3",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-11T13:08:15.321Z",
+      "txHash": "0xSIMULATED_1762866495322",
+      "cycleNumber": 1
+    },
+    {
+      "address": "0x2c3cbc0c8afa96842bc4ece378427ce69cf9e1ac",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-11T13:08:37.742Z",
+      "txHash": "0xSIMULATED_1762866517743",
+      "cycleNumber": 1
     }
   ],
   "battles": [
@@ -231,6 +623,564 @@
         "KEN": []
       },
       "timestamp": "2025-10-14T22:13:37.436Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762857482231,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0.11,
+        "KEN": 0.1
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0x4ea1c637482d7a128a3aa0113d9e71a0eb8b778b",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T10:35:05.990Z",
+            "txHash": "0xSIMULATED_1762857305990",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0xb376d66fdf64e43796740fde550a0bb72adcc538",
+            "amount": 0.01,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T10:35:06.439Z",
+            "txHash": "0xSIMULATED_1762857306439",
+            "cycleNumber": 1
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0x9fec0e8ced25544f786fba8e7e05e0e2406c6a85",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T10:35:05.428Z",
+            "txHash": "0xSIMULATED_1762857305428",
+            "cycleNumber": 1
+          }
+        ]
+      },
+      "timestamp": "2025-11-11T10:39:41.250Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762861338536,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0.11,
+        "KEN": 0.1
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0xda7497bb58d323030f4f02787b53c17186d68adc",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T11:39:26.142Z",
+            "txHash": "0xSIMULATED_1762861166142",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0x4e14f5ebec6c41b5da769fdab00fad90ddc7b324",
+            "amount": 0.01,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T11:39:26.754Z",
+            "txHash": "0xSIMULATED_1762861166754",
+            "cycleNumber": 1
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0x098b75f60c95b7f3f804a42f60aea10a5b99ecfc",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T11:39:25.684Z",
+            "txHash": "0xSIMULATED_1762861165684",
+            "cycleNumber": 1
+          }
+        ]
+      },
+      "timestamp": "2025-11-11T11:42:39.885Z"
+    },
+    {
+      "cycleNumber": 2,
+      "seed": 1762861338536,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T11:43:57.550Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762861856995,
+      "winner": "KEN",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0.11,
+        "KEN": 0.30000000000000004
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0xd3dbc5e12fae0776c501a8af6acdde5a813bebb5",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T11:47:55.131Z",
+            "txHash": "0xSIMULATED_1762861675130",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0xb33fbf20f75681f30fa79a186100701b732f9c64",
+            "amount": 0.01,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T11:47:55.592Z",
+            "txHash": "0xSIMULATED_1762861675591",
+            "cycleNumber": 1
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0xbeedf5c19305ef62faa7730ec05fbd26fa1a5aaf",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T11:47:54.571Z",
+            "txHash": "0xSIMULATED_1762861674570",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0x047dbb88b035554f6398b44920dea2b7a262134d",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T11:49:29.366Z",
+            "txHash": "0xSIMULATED_1762861769366",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0x403dfec6c2a7336c7c4860c76146f55ba6e316fa",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T11:49:29.754Z",
+            "txHash": "0xSIMULATED_1762861769754",
+            "cycleNumber": 1
+          }
+        ]
+      },
+      "timestamp": "2025-11-11T11:51:42.720Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762863950121,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0.1,
+        "KEN": 0.1
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0x40bd57cf5bf87ba6f26846e42abadfa4139cba55",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T12:23:00.620Z",
+            "txHash": "0xSIMULATED_1762863780621",
+            "cycleNumber": 1
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0xbe6c72c98f33bf977b5659eb8b046d228361dec0",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:23:00.253Z",
+            "txHash": "0xSIMULATED_1762863780253",
+            "cycleNumber": 1
+          }
+        ]
+      },
+      "timestamp": "2025-11-11T12:27:29.135Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762864319759,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T12:33:38.761Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762864829309,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0.21000000000000002,
+        "KEN": 0.2
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0xca21ab912690548b3f717edaf6eb8980460b2d09",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T12:37:34.963Z",
+            "txHash": "0xSIMULATED_1762864654964",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0x8a53f8f62d293ee8c2d19ceaf141dce59fc2ac67",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T12:37:35.724Z",
+            "txHash": "0xSIMULATED_1762864655725",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0xa8a5d43ae1bc6cb1370f3722300b2b376320f645",
+            "amount": 0.01,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T12:37:36.081Z",
+            "txHash": "0xSIMULATED_1762864656063",
+            "cycleNumber": 1
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0xd040267d5323e0ba5afe38b0604163a8edf616fd",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:37:34.671Z",
+            "txHash": "0xSIMULATED_1762864654671",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0x85a512053460c481e97fc6f8b4b711e1d3741e8a",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:37:35.395Z",
+            "txHash": "0xSIMULATED_1762864655395",
+            "cycleNumber": 1
+          }
+        ]
+      },
+      "timestamp": "2025-11-11T12:40:55.221Z"
+    },
+    {
+      "cycleNumber": 2,
+      "seed": 1762864829309,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T12:42:08.324Z"
+    },
+    {
+      "cycleNumber": 3,
+      "seed": 1762865051343,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0.11,
+        "KEN": 0.8099999999999999
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0x4c15faffd50eea6a53a19e5f19aeee7e9d6a090a",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T12:42:56.364Z",
+            "txHash": "0xSIMULATED_1762864976364",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0x709ae4e8e465bb3e89b46236b450ac4b59712379",
+            "amount": 0.01,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T12:42:57.277Z",
+            "txHash": "0xSIMULATED_1762864977277",
+            "cycleNumber": 3
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0x74db942dbe1436f25a93391f53fcb4eb1988d536",
+            "amount": 0.01,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:42:56.948Z",
+            "txHash": "0xSIMULATED_1762864976948",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0x75d23b09827745e4ef8df03c2470c63b70c6112e",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:42:57.537Z",
+            "txHash": "0xSIMULATED_1762864977537",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0x92a09968cb07400ad1901a8117696b5be24e407d",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:43:07.818Z",
+            "txHash": "0xSIMULATED_1762864987818",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0x0641265de25a3d22c063fa6a19d47d3607b81615",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:43:07.988Z",
+            "txHash": "0xSIMULATED_1762864987988",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0x319779ee34033d5f5b562171b5bf1160015eb748",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:43:08.158Z",
+            "txHash": "0xSIMULATED_1762864988158",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0x317643d5111e8e51c33796244f864a7112ea41c3",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:43:08.311Z",
+            "txHash": "0xSIMULATED_1762864988311",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0x94f419ccd3acc41a0e1934577c8743b953aeaf16",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:43:08.481Z",
+            "txHash": "0xSIMULATED_1762864988481",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0x00230a94c4704ac1b692bc30a10dc999e01e2d97",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:43:08.633Z",
+            "txHash": "0xSIMULATED_1762864988633",
+            "cycleNumber": 3
+          },
+          {
+            "address": "0xc2097f50cde90a8f5a15c5d4c4841c126f042d0d",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T12:43:08.817Z",
+            "txHash": "0xSIMULATED_1762864988817",
+            "cycleNumber": 3
+          }
+        ]
+      },
+      "timestamp": "2025-11-11T12:44:55.912Z"
+    },
+    {
+      "cycleNumber": 4,
+      "seed": 1762865124422,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T12:45:50.352Z"
+    },
+    {
+      "cycleNumber": 5,
+      "seed": 1762865124422,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T12:47:03.425Z"
+    },
+    {
+      "cycleNumber": 6,
+      "seed": 1762865346443,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T12:49:51.019Z"
+    },
+    {
+      "cycleNumber": 7,
+      "seed": 1762865419519,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T12:50:45.446Z"
+    },
+    {
+      "cycleNumber": 8,
+      "seed": 1762865419519,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T12:51:58.527Z"
+    },
+    {
+      "cycleNumber": 9,
+      "seed": 1762865641519,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T12:54:46.099Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762866667049,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0.30000000000000004,
+        "KEN": 0.2
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0x7ea337beb33cb99992318d8b6d73f79628ee9e54",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T13:08:14.158Z",
+            "txHash": "0xSIMULATED_1762866494158",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0xa14cf314d7ffe2b553e90ba1b147dc1a7d09a875",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T13:08:15.069Z",
+            "txHash": "0xSIMULATED_1762866495070",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0x2c3cbc0c8afa96842bc4ece378427ce69cf9e1ac",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-11T13:08:37.742Z",
+            "txHash": "0xSIMULATED_1762866517743",
+            "cycleNumber": 1
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0x6fc23cc271d82727a8eb1ab7271f778efbefa16c",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T13:08:14.416Z",
+            "txHash": "0xSIMULATED_1762866494417",
+            "cycleNumber": 1
+          },
+          {
+            "address": "0xd5439366c629350695d08c3dbf2c1f478dc76cf3",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-11T13:08:15.321Z",
+            "txHash": "0xSIMULATED_1762866495322",
+            "cycleNumber": 1
+          }
+        ]
+      },
+      "timestamp": "2025-11-11T13:11:31.675Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762867127595,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-11T13:20:26.601Z"
     }
   ],
   "payments": [
@@ -259,16 +1209,405 @@
       "amount": 0.02425,
       "error": "Returned error: nonce too low: next nonce 4, tx nonce 3",
       "timestamp": "2025-10-14T20:51:38.546Z"
+    },
+    {
+      "type": "house_fee",
+      "amount": 0.005000000000000001,
+      "cycleNumber": 1,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762857581252",
+      "from": "simulated",
+      "to": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb4",
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T10:39:41.252Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x4ea1c637482d7a128a3aa0113d9e71a0eb8b778b",
+      "originalBet": 0.1,
+      "payout": 0.1863636363636364,
+      "profit": 0.08636363636363639,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762857581261",
+      "from": "simulated",
+      "to": "0x4ea1c637482d7a128a3aa0113d9e71a0eb8b778b",
+      "amount": 0.1863636363636364,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T10:39:41.261Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0xb376d66fdf64e43796740fde550a0bb72adcc538",
+      "originalBet": 0.01,
+      "payout": 0.01863636363636364,
+      "profit": 0.008636363636363638,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762857581269",
+      "from": "simulated",
+      "to": "0xb376d66fdf64e43796740fde550a0bb72adcc538",
+      "amount": 0.01863636363636364,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T10:39:41.269Z"
+    },
+    {
+      "type": "house_fee",
+      "amount": 0.005000000000000001,
+      "cycleNumber": 1,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762861359887",
+      "from": "simulated",
+      "to": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb4",
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T11:42:39.887Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0xda7497bb58d323030f4f02787b53c17186d68adc",
+      "originalBet": 0.1,
+      "payout": 0.1863636363636364,
+      "profit": 0.08636363636363639,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762861359895",
+      "from": "simulated",
+      "to": "0xda7497bb58d323030f4f02787b53c17186d68adc",
+      "amount": 0.1863636363636364,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T11:42:39.895Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x4e14f5ebec6c41b5da769fdab00fad90ddc7b324",
+      "originalBet": 0.01,
+      "payout": 0.01863636363636364,
+      "profit": 0.008636363636363638,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762861359904",
+      "from": "simulated",
+      "to": "0x4e14f5ebec6c41b5da769fdab00fad90ddc7b324",
+      "amount": 0.01863636363636364,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T11:42:39.904Z"
+    },
+    {
+      "type": "house_fee",
+      "amount": 0.0055000000000000005,
+      "cycleNumber": 1,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762861902722",
+      "from": "simulated",
+      "to": "0x27045FF06a3240342bd9DaA28b59DB931b668364",
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T11:51:42.722Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0xbeedf5c19305ef62faa7730ec05fbd26fa1a5aaf",
+      "originalBet": 0.1,
+      "payout": 0.13483333333333333,
+      "profit": 0.03483333333333333,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762861902732",
+      "from": "simulated",
+      "to": "0xbeedf5c19305ef62faa7730ec05fbd26fa1a5aaf",
+      "amount": 0.13483333333333333,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T11:51:42.732Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x047dbb88b035554f6398b44920dea2b7a262134d",
+      "originalBet": 0.1,
+      "payout": 0.13483333333333333,
+      "profit": 0.03483333333333333,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762861902742",
+      "from": "simulated",
+      "to": "0x047dbb88b035554f6398b44920dea2b7a262134d",
+      "amount": 0.13483333333333333,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T11:51:42.742Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x403dfec6c2a7336c7c4860c76146f55ba6e316fa",
+      "originalBet": 0.1,
+      "payout": 0.13483333333333333,
+      "profit": 0.03483333333333333,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762861902751",
+      "from": "simulated",
+      "to": "0x403dfec6c2a7336c7c4860c76146f55ba6e316fa",
+      "amount": 0.13483333333333333,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T11:51:42.751Z"
+    },
+    {
+      "type": "house_fee",
+      "amount": 0.005000000000000001,
+      "cycleNumber": 1,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762864049136",
+      "from": "simulated",
+      "to": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb4",
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:27:29.136Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x40bd57cf5bf87ba6f26846e42abadfa4139cba55",
+      "originalBet": 0.1,
+      "payout": 0.195,
+      "profit": 0.095,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762864049145",
+      "from": "simulated",
+      "to": "0x40bd57cf5bf87ba6f26846e42abadfa4139cba55",
+      "amount": 0.195,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:27:29.145Z"
+    },
+    {
+      "type": "house_fee",
+      "amount": 0.010000000000000002,
+      "cycleNumber": 1,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762864855222",
+      "from": "simulated",
+      "to": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb4",
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:40:55.222Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0xca21ab912690548b3f717edaf6eb8980460b2d09",
+      "originalBet": 0.1,
+      "payout": 0.19047619047619047,
+      "profit": 0.09047619047619046,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762864855232",
+      "from": "simulated",
+      "to": "0xca21ab912690548b3f717edaf6eb8980460b2d09",
+      "amount": 0.19047619047619047,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:40:55.232Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x8a53f8f62d293ee8c2d19ceaf141dce59fc2ac67",
+      "originalBet": 0.1,
+      "payout": 0.19047619047619047,
+      "profit": 0.09047619047619046,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762864855241",
+      "from": "simulated",
+      "to": "0x8a53f8f62d293ee8c2d19ceaf141dce59fc2ac67",
+      "amount": 0.19047619047619047,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:40:55.242Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0xa8a5d43ae1bc6cb1370f3722300b2b376320f645",
+      "originalBet": 0.01,
+      "payout": 0.01904761904761905,
+      "profit": 0.009047619047619049,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762864855251",
+      "from": "simulated",
+      "to": "0xa8a5d43ae1bc6cb1370f3722300b2b376320f645",
+      "amount": 0.01904761904761905,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:40:55.251Z"
+    },
+    {
+      "type": "house_fee",
+      "amount": 0.0405,
+      "cycleNumber": 3,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762865095914",
+      "from": "simulated",
+      "to": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb4",
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:44:55.914Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 3,
+      "address": "0x4c15faffd50eea6a53a19e5f19aeee7e9d6a090a",
+      "originalBet": 0.1,
+      "payout": 0.7995454545454546,
+      "profit": 0.6995454545454546,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762865095925",
+      "from": "simulated",
+      "to": "0x4c15faffd50eea6a53a19e5f19aeee7e9d6a090a",
+      "amount": 0.7995454545454546,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:44:55.925Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 3,
+      "address": "0x709ae4e8e465bb3e89b46236b450ac4b59712379",
+      "originalBet": 0.01,
+      "payout": 0.07995454545454546,
+      "profit": 0.06995454545454546,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762865095934",
+      "from": "simulated",
+      "to": "0x709ae4e8e465bb3e89b46236b450ac4b59712379",
+      "amount": 0.07995454545454546,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T12:44:55.934Z"
+    },
+    {
+      "type": "house_fee",
+      "amount": 0.010000000000000002,
+      "cycleNumber": 1,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762866691677",
+      "from": "simulated",
+      "to": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb4",
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T13:11:31.677Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x7ea337beb33cb99992318d8b6d73f79628ee9e54",
+      "originalBet": 0.1,
+      "payout": 0.16333333333333333,
+      "profit": 0.06333333333333332,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762866691687",
+      "from": "simulated",
+      "to": "0x7ea337beb33cb99992318d8b6d73f79628ee9e54",
+      "amount": 0.16333333333333333,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T13:11:31.687Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0xa14cf314d7ffe2b553e90ba1b147dc1a7d09a875",
+      "originalBet": 0.1,
+      "payout": 0.16333333333333333,
+      "profit": 0.06333333333333332,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762866691697",
+      "from": "simulated",
+      "to": "0xa14cf314d7ffe2b553e90ba1b147dc1a7d09a875",
+      "amount": 0.16333333333333333,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T13:11:31.697Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 1,
+      "address": "0x2c3cbc0c8afa96842bc4ece378427ce69cf9e1ac",
+      "originalBet": 0.1,
+      "payout": 0.16333333333333333,
+      "profit": 0.06333333333333332,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762866691706",
+      "from": "simulated",
+      "to": "0x2c3cbc0c8afa96842bc4ece378427ce69cf9e1ac",
+      "amount": 0.16333333333333333,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-11T13:11:31.706Z"
     }
   ],
   "stats": {
-    "totalBattles": 13,
-    "ryuWins": 4,
-    "kenWins": 9,
-    "totalVolume": 0.025,
+    "totalBattles": 30,
+    "ryuWins": 20,
+    "kenWins": 10,
+    "totalVolume": 4.025000000000001,
     "totalPlayers": [
-      "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16"
+      "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16",
+      "0xb6c8f2764626a69ddf402999188f2800409112f1",
+      "0x5992efb15969bb4ed3aaade22645e8cc926dcfcd",
+      "0xe4621fc59616287359a8f10b20a9f07a4b4b27c4",
+      "0x40b85e0e0273a7cc84b625d4bf6d6c57b2da6d07",
+      "0xa066971bb13de093916c8f31f15230e4321d1d5a",
+      "0xfafc32ccf7cf8d66a0211221addcb6a052cffac0",
+      "0xc7a974878acd0ba9a70cd36ce8b37c19582860da",
+      "0xfb3d4f250a559aeb38d1ed76f614e0ba92f5de54",
+      "0x9fec0e8ced25544f786fba8e7e05e0e2406c6a85",
+      "0x4ea1c637482d7a128a3aa0113d9e71a0eb8b778b",
+      "0xb376d66fdf64e43796740fde550a0bb72adcc538",
+      "0x961fd26b5ad63540e7b07a38747af19c543a59af",
+      "0x512956c44788cbbf041a383322ea175932f7344d",
+      "0x39c24ff2be7e204785cae8af7cb612843d63fa3d",
+      "0x69c6549aadfc25729332023ccb54a5163290f49e",
+      "0xfd18e0b06bc167d0e1747cd9d59ee514f67ed700",
+      "0x7aa86529d4fd83457150498785c6cc5b3ac6c8b8",
+      "0x8af5fecba0e60eac286d8e339f80d529d30602cf",
+      "0x098b75f60c95b7f3f804a42f60aea10a5b99ecfc",
+      "0xda7497bb58d323030f4f02787b53c17186d68adc",
+      "0x4e14f5ebec6c41b5da769fdab00fad90ddc7b324",
+      "0xbeedf5c19305ef62faa7730ec05fbd26fa1a5aaf",
+      "0xd3dbc5e12fae0776c501a8af6acdde5a813bebb5",
+      "0xb33fbf20f75681f30fa79a186100701b732f9c64",
+      "0x047dbb88b035554f6398b44920dea2b7a262134d",
+      "0x403dfec6c2a7336c7c4860c76146f55ba6e316fa",
+      "0xbe6c72c98f33bf977b5659eb8b046d228361dec0",
+      "0x40bd57cf5bf87ba6f26846e42abadfa4139cba55",
+      "0xd040267d5323e0ba5afe38b0604163a8edf616fd",
+      "0xca21ab912690548b3f717edaf6eb8980460b2d09",
+      "0x85a512053460c481e97fc6f8b4b711e1d3741e8a",
+      "0x8a53f8f62d293ee8c2d19ceaf141dce59fc2ac67",
+      "0xa8a5d43ae1bc6cb1370f3722300b2b376320f645",
+      "0x4c15faffd50eea6a53a19e5f19aeee7e9d6a090a",
+      "0x74db942dbe1436f25a93391f53fcb4eb1988d536",
+      "0x709ae4e8e465bb3e89b46236b450ac4b59712379",
+      "0x75d23b09827745e4ef8df03c2470c63b70c6112e",
+      "0x92a09968cb07400ad1901a8117696b5be24e407d",
+      "0x0641265de25a3d22c063fa6a19d47d3607b81615",
+      "0x319779ee34033d5f5b562171b5bf1160015eb748",
+      "0x317643d5111e8e51c33796244f864a7112ea41c3",
+      "0x94f419ccd3acc41a0e1934577c8743b953aeaf16",
+      "0x00230a94c4704ac1b692bc30a10dc999e01e2d97",
+      "0xc2097f50cde90a8f5a15c5d4c4841c126f042d0d",
+      "0x7ea337beb33cb99992318d8b6d73f79628ee9e54",
+      "0x6fc23cc271d82727a8eb1ab7271f778efbefa16c",
+      "0xa14cf314d7ffe2b553e90ba1b147dc1a7d09a875",
+      "0xd5439366c629350695d08c3dbf2c1f478dc76cf3",
+      "0x2c3cbc0c8afa96842bc4ece378427ce69cf9e1ac"
     ],
-    "lastBattle": "2025-10-14T22:13:37.436Z"
+    "lastBattle": "2025-11-11T13:20:26.601Z"
   }
 }

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Street Fighter - Battle Arena</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			background: #000;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			overflow: hidden;
+			position: relative;
+		}
+
+		#game-container {
+			position: relative;
+			width: 100%;
+			height: auto;
+			max-width: 100%;
+		}
+
+		canvas {
+			image-rendering: pixelated;
+			image-rendering: crisp-edges;
+			width: 100%;
+			height: auto;
+			max-width: 100%;
+			border: none;
+			display: block;
+		}
+
+		#loading {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: #fff;
+			font-family: 'Arial', monospace;
+			font-size: 18px;
+			text-align: center;
+			z-index: 1000;
+			background: rgba(0, 0, 0, 0.8);
+			padding: 20px 40px;
+			border-radius: 10px;
+			pointer-events: none;
+		}
+
+		#loading.hidden {
+			display: none;
+		}
+
+		#loading-bar {
+			width: 200px;
+			height: 10px;
+			background: #333;
+			margin-top: 10px;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+
+		#loading-progress {
+			height: 100%;
+			background: linear-gradient(90deg, #4CAF50, #8BC34A);
+			width: 0%;
+			transition: width 0.3s ease;
+		}
+	</style>
+</head>
+<body>
+	<!-- Loading overlay -->
+	<div id="loading">
+		<div>Loading Street Fighter...</div>
+		<div id="loading-bar">
+			<div id="loading-progress"></div>
+		</div>
+		<div id="loading-text">0%</div>
+	</div>
+
+	<!-- Game container with canvas -->
+	<div id="game-container">
+		<canvas id="game-canvas" width="382" height="224"></canvas>
+	</div>
+
+	<!-- Socket.io para sincronización -->
+	<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+	<!-- PARCHE GLOBAL: Hacer TODOS los drawImage seguros -->
+	<script>
+		(function() {
+			console.log('🔧 Applying global drawImage safety patch...');
+			
+			// Esperar a que el canvas exista
+			function waitForCanvas() {
+				return new Promise((resolve) => {
+					const check = () => {
+						const canvas = document.getElementById('game-canvas');
+						if (canvas) {
+							console.log('✅ Canvas found in DOM');
+							resolve(canvas);
+						} else {
+							console.log('⏳ Waiting for canvas...');
+							setTimeout(check, 50);
+						}
+					};
+					check();
+				});
+			}
+
+			waitForCanvas().then(canvas => {
+				const context = canvas.getContext('2d');
+				if (!context) {
+					console.error('❌ Could not get 2D context!');
+					return;
+				}
+				
+				// Guardar el drawImage original
+				const originalDrawImage = context.drawImage.bind(context);
+				
+				// Parchear con validación automática
+				context.drawImage = function(image, ...args) {
+					// Validación 1: image existe
+					if (!image) {
+						return;
+					}
+					
+					// Validación 2: image es del tipo correcto
+					const isValidImage = image instanceof HTMLImageElement || 
+					                     image instanceof HTMLCanvasElement ||
+					                     image instanceof ImageBitmap;
+					if (!isValidImage) {
+						console.warn('Invalid image type for drawImage');
+						return;
+					}
+					
+					// Validación 3: HTMLImageElement debe estar cargado
+					if (image instanceof HTMLImageElement) {
+						if (!image.complete) {
+							return;
+						}
+						if (!image.naturalWidth || !image.naturalHeight) {
+							return;
+						}
+					}
+					
+					// Validación 4: argumentos numéricos válidos
+					if (args.some(arg => typeof arg === 'number' && isNaN(arg))) {
+						console.warn('Invalid arguments for drawImage');
+						return;
+					}
+					
+					// Dibujar de forma segura
+					try {
+						originalDrawImage(image, ...args);
+					} catch (error) {
+						console.error('drawImage error:', error.message);
+					}
+				};
+				
+				console.log('✅ Global drawImage safety patch applied!');
+			});
+		})();
+	</script>
+
+	<!-- Game Assets - Hidden images for loading -->
+	<div style="display: none;">
+		<img id="hud" src="./public/images/hud.png" onerror="this.dataset.error='true'" />
+		<img id="Logo" src="./public/images/logo.png" onerror="this.dataset.error='true'" />
+		<img id="Ryu" src="./public/images/Ryu.png" onerror="this.dataset.error='true'" />
+		<img id="Ken" src="./public/images/Ken.png" onerror="this.dataset.error='true'" />
+		<img id="Winner" src="./public/images/misc.png" onerror="this.dataset.error='true'" />
+		<img id="RyuImage" src="./public/images/Ryu.png" onerror="this.dataset.error='true'" />
+		<img id="KenImage" src="./public/images/ken.png" onerror="this.dataset.error='true'" />
+		
+		<!-- Stage backgrounds -->
+		<img id="KenStage" src="./public/images/ken-stage.png" onerror="this.dataset.error='true'" />
+		<img id="RyuStage" src="./public/images/ryu-stage.png" onerror="this.dataset.error='true'" />
+	</div>
+
+	<!-- Background music (stage themes) -->
+	<audio id="kensTheme" src="./public/sound/music/ken-theme.mp3" loop preload="auto"></audio>
+	<audio id="ryusTheme" src="./public/sound/music/ryu-theme.mp3" loop preload="auto"></audio>
+
+	<!-- Asset Loading Manager -->
+	<script>
+		(function() {
+			console.log('🎨 Initializing asset loading manager...');
+			
+			const loadingDiv = document.getElementById('loading');
+			const progressBar = document.getElementById('loading-progress');
+			const loadingText = document.getElementById('loading-text');
+			
+			// Imágenes críticas que DEBEN cargarse
+			const criticalImages = [
+				{ id: 'hud', name: 'HUD' },
+				{ id: 'Ryu', name: 'Ryu sprites' },
+				{ id: 'Ken', name: 'Ken sprites' },
+				{ id: 'KenStage', name: 'Ken Stage' }
+			];
+			
+			// Imágenes opcionales
+			const optionalImages = [
+				{ id: 'Logo', name: 'Logo' },
+				{ id: 'Winner', name: 'Winner graphics' },
+				{ id: 'RyuImage', name: 'Ryu image' },
+				{ id: 'KenImage', name: 'Ken image' },
+				{ id: 'RyuStage', name: 'Ryu Stage' }
+			];
+			
+			let loadedCount = 0;
+			const totalImages = criticalImages.length + optionalImages.length;
+			
+			function updateProgress() {
+				const progress = Math.round((loadedCount / totalImages) * 100);
+				progressBar.style.width = progress + '%';
+				loadingText.textContent = progress + '%';
+			}
+			
+			function checkImage(imageInfo, isCritical) {
+				const { id, name } = imageInfo;
+				const img = document.getElementById(id);
+				
+				if (!img) {
+					console.warn(`⚠️ Image ${name} (${id}) not found in DOM`);
+					loadedCount++;
+					updateProgress();
+					return Promise.resolve();
+				}
+				
+				return new Promise((resolve) => {
+					// Si ya está cargada
+					if (img.complete && img.naturalWidth > 0) {
+						console.log(`✅ ${name} already loaded (${img.naturalWidth}x${img.naturalHeight})`);
+						loadedCount++;
+						updateProgress();
+						resolve();
+						return;
+					}
+					
+					// Listener de carga exitosa
+					img.addEventListener('load', () => {
+						console.log(`✅ ${name} loaded (${img.naturalWidth}x${img.naturalHeight})`);
+						loadedCount++;
+						updateProgress();
+						resolve();
+					});
+					
+					// Listener de error
+					img.addEventListener('error', () => {
+						if (isCritical) {
+							console.error(`❌ CRITICAL: ${name} failed to load!`);
+						} else {
+							console.warn(`⚠️ ${name} failed to load (optional)`);
+						}
+						loadedCount++;
+						updateProgress();
+						resolve();
+					});
+					
+					// Forzar recarga si es necesario
+					if (!img.complete) {
+						const src = img.src;
+						img.src = '';
+						img.src = src;
+					}
+				});
+			}
+			
+			// Esperar a que todos los assets se carguen
+			async function waitForAssets() {
+				console.log('⏳ Loading game assets...');
+				
+				// Cargar imágenes críticas
+				const criticalPromises = criticalImages.map(img => checkImage(img, true));
+				
+				// Cargar imágenes opcionales
+				const optionalPromises = optionalImages.map(img => checkImage(img, false));
+				
+				// Esperar todas
+				await Promise.all([...criticalPromises, ...optionalPromises]);
+				
+				console.log('✅ All assets loaded!');
+				
+				// Verificar que las imágenes críticas se cargaron
+				let criticalError = false;
+				criticalImages.forEach(({ id, name }) => {
+					const img = document.getElementById(id);
+					if (!img || img.dataset.error === 'true' || !img.complete || img.naturalWidth === 0) {
+						console.error(`❌ CRITICAL ERROR: ${name} did not load properly!`);
+						criticalError = true;
+					}
+				});
+				
+				if (criticalError) {
+					loadingDiv.innerHTML = '<div style="color: #f44336;">Error loading critical assets.<br>Please check console and refresh.</div>';
+					return;
+				}
+				
+				// Pequeño delay para que se vea el 100%
+				await new Promise(resolve => setTimeout(resolve, 500));
+				
+				// Ocultar loading screen
+				loadingDiv.classList.add('hidden');
+				
+				// Iniciar el juego
+				console.log('🎮 Starting game...');
+				startGame();
+			}
+			
+			function startGame() {
+				// Verificar que el canvas existe antes de iniciar
+				const canvas = document.getElementById('game-canvas');
+				if (!canvas) {
+					console.error('❌ CRITICAL: Canvas not found!');
+					loadingDiv.innerHTML = '<div style="color: #f44336;">ERROR: Canvas not found.<br>Please refresh the page.</div>';
+					loadingDiv.classList.remove('hidden');
+					return;
+				}
+				
+				console.log('✅ Canvas verified, dimensions:', canvas.width, 'x', canvas.height);
+				
+				// Importar y iniciar el juego
+				import('./src/index.js')
+					.then(() => {
+						console.log('✅ Game started successfully!');
+					})
+					.catch(error => {
+						console.error('❌ Failed to load game:', error);
+						loadingDiv.innerHTML = '<div style="color: #f44336;">Failed to load game.<br>Check console for details.</div>';
+						loadingDiv.classList.remove('hidden');
+					});
+			}
+			
+			// Iniciar carga cuando el DOM esté listo
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', waitForAssets);
+			} else {
+				// DOM ya está listo
+				waitForAssets();
+			}
+		})();
+	</script>
+
+	<!-- Configuración global del servidor -->
+	<script>
+		const hostname = window.location.hostname;
+		const protocol = window.location.protocol;
+		
+		// ngrok (para testing)
+		if (hostname.includes('ngrok')) {
+			window.GAME_SERVER_URL = protocol + '//' + hostname;
+		}
+		// Desarrollo local
+		else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+			window.GAME_SERVER_URL = 'http://localhost:3000';
+		} 
+		// Producción
+		else {
+			window.GAME_SERVER_URL = protocol + '//' + hostname;
+		}
+
+		console.log('🎮 Game will connect to:', window.GAME_SERVER_URL);
+	</script>
+</body>
+</html>
