@@ -407,6 +407,22 @@
       "timestamp": "2025-11-11T13:08:37.742Z",
       "txHash": "0xSIMULATED_1762866517743",
       "cycleNumber": 1
+    },
+    {
+      "address": "0x219f7704557b171fa9aed14c504b4f7ed77392cb",
+      "amount": 0.1,
+      "fighter": "RYU",
+      "timestamp": "2025-11-12T11:08:49.603Z",
+      "txHash": "0xSIMULATED_1762945729602",
+      "cycleNumber": 4
+    },
+    {
+      "address": "0xa5cbc2759e98630862a8009c9ad025ab502e4148",
+      "amount": 0.1,
+      "fighter": "KEN",
+      "timestamp": "2025-11-12T11:08:50.123Z",
+      "txHash": "0xSIMULATED_1762945730123",
+      "cycleNumber": 4
     }
   ],
   "battles": [
@@ -1181,6 +1197,120 @@
         "KEN": []
       },
       "timestamp": "2025-11-11T13:20:26.601Z"
+    },
+    {
+      "cycleNumber": 1,
+      "seed": 1762944860978,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-12T10:55:59.991Z"
+    },
+    {
+      "cycleNumber": 2,
+      "seed": 1762945156057,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-12T11:00:55.072Z"
+    },
+    {
+      "cycleNumber": 3,
+      "seed": 1762945451157,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-12T11:05:50.165Z"
+    },
+    {
+      "cycleNumber": 4,
+      "seed": 1762945746223,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0.1,
+        "KEN": 0.1
+      },
+      "bets": {
+        "RYU": [
+          {
+            "address": "0x219f7704557b171fa9aed14c504b4f7ed77392cb",
+            "amount": 0.1,
+            "fighter": "RYU",
+            "timestamp": "2025-11-12T11:08:49.603Z",
+            "txHash": "0xSIMULATED_1762945729602",
+            "cycleNumber": 4
+          }
+        ],
+        "KEN": [
+          {
+            "address": "0xa5cbc2759e98630862a8009c9ad025ab502e4148",
+            "amount": 0.1,
+            "fighter": "KEN",
+            "timestamp": "2025-11-12T11:08:50.123Z",
+            "txHash": "0xSIMULATED_1762945730123",
+            "cycleNumber": 4
+          }
+        ]
+      },
+      "timestamp": "2025-11-12T11:09:35.163Z"
+    },
+    {
+      "cycleNumber": 5,
+      "seed": 1762945746223,
+      "winner": "RYU",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-12T11:10:45.232Z"
+    },
+    {
+      "cycleNumber": 6,
+      "seed": 1762945971228,
+      "winner": "KEN",
+      "duration": "99.0",
+      "frames": 0,
+      "totalPools": {
+        "RYU": 0,
+        "KEN": 0
+      },
+      "bets": {
+        "RYU": [],
+        "KEN": []
+      },
+      "timestamp": "2025-11-12T11:13:22.248Z"
     }
   ],
   "payments": [
@@ -1549,13 +1679,41 @@
       "amount": 0.16333333333333333,
       "message": "Payments simulated - no real BSC integration yet",
       "timestamp": "2025-11-11T13:11:31.706Z"
+    },
+    {
+      "type": "house_fee",
+      "amount": 0.005000000000000001,
+      "cycleNumber": 4,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762945775165",
+      "from": "simulated",
+      "to": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb4",
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-12T11:09:35.165Z"
+    },
+    {
+      "type": "winner_payout",
+      "cycleNumber": 4,
+      "address": "0x219f7704557b171fa9aed14c504b4f7ed77392cb",
+      "originalBet": 0.1,
+      "payout": 0.195,
+      "profit": 0.095,
+      "success": true,
+      "simulated": true,
+      "hash": "SIMULATED_1762945775173",
+      "from": "simulated",
+      "to": "0x219f7704557b171fa9aed14c504b4f7ed77392cb",
+      "amount": 0.195,
+      "message": "Payments simulated - no real BSC integration yet",
+      "timestamp": "2025-11-12T11:09:35.173Z"
     }
   ],
   "stats": {
-    "totalBattles": 30,
-    "ryuWins": 20,
-    "kenWins": 10,
-    "totalVolume": 4.025000000000001,
+    "totalBattles": 36,
+    "ryuWins": 25,
+    "kenWins": 11,
+    "totalVolume": 4.2250000000000005,
     "totalPlayers": [
       "0x04c9ba94aa390cbe87a0a1119b2d6711319a6b16",
       "0xb6c8f2764626a69ddf402999188f2800409112f1",
@@ -1606,8 +1764,10 @@
       "0x6fc23cc271d82727a8eb1ab7271f778efbefa16c",
       "0xa14cf314d7ffe2b553e90ba1b147dc1a7d09a875",
       "0xd5439366c629350695d08c3dbf2c1f478dc76cf3",
-      "0x2c3cbc0c8afa96842bc4ece378427ce69cf9e1ac"
+      "0x2c3cbc0c8afa96842bc4ece378427ce69cf9e1ac",
+      "0x219f7704557b171fa9aed14c504b4f7ed77392cb",
+      "0xa5cbc2759e98630862a8009c9ad025ab502e4148"
     ],
-    "lastBattle": "2025-11-11T13:20:26.601Z"
+    "lastBattle": "2025-11-12T11:13:22.248Z"
   }
 }
